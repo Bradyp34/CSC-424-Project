@@ -2,7 +2,8 @@
   "dependencies": {
     "better-sqlite3": "^9.4.3",
     "express": "^4.19.2",
-    "node.js": "^0.0.1-security"
+    "node.js": "^0.0.1-security",
+    "winston": "^3.13.0"
   },
   "devDependencies": {
     "chai": "^5.1.0",
