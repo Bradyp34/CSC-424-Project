@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "better-sqlite3": "^9.4.3",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "node.js": "^0.0.1-security"
   },
   "devDependencies": {
     "chai": "^5.1.0",
@@ -9,6 +10,6 @@
     "mocha": "^10.4.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha './tests/*.mjs'"
   }
 }
