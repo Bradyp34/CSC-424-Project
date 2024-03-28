@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { app } from '../server.js'; // Adjust the path as necessary
+import {app} from '../server.js';
 
 const { expect } = chai;
 chai.use(chaiHttp);
