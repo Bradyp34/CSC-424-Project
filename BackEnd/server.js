@@ -17,3 +17,11 @@ app.post("/Login", (req, res) => {
 app.listen(PORT, () => {
     console.log(`server now live on ${PORT}`)
 })
+
+
+
+function add(a, b) {
+    return a + b;
+  }
+  
+  module.exports = { add };  

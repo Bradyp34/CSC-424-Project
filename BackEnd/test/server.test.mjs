@@ -1,6 +1,6 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import app from '/BackEnd/server.js'; // Your Express app
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const app = require('../server.js');
 const { expect } = chai;
 
 chai.use(chaiHttp);
@@ -14,12 +14,6 @@ describe('Server', () => {
         done();
       });
   });
-
-  function add(a, b) {
-    return a + b;
-  }
-  
-  module.exports = { add };  
 
   // Add more test cases as needed
 });
