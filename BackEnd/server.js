@@ -12,13 +12,14 @@ app.post("/Login", (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.status(200).send('Hello, world!');
+});
+
 app.listen(PORT, () => {
     console.log(`server now live on ${PORT}`);
 });
 
-module.exports = {app};
 
-app.get('/', (req, res) => {
-    res.status(200).send('Hello, world!');
-});
+module.exports = { app };
 

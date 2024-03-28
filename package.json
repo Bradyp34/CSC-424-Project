@@ -2,5 +2,9 @@
   "devDependencies": {
     "chai": "^5.1.0",
     "mocha": "^10.4.0"
+  },
+  "dependencies": {
+    "chai-http": "^4.4.0",
+    "test": "^3.3.0"
   }
 }
