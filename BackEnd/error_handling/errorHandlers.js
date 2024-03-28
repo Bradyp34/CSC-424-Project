@@ -1,4 +1,5 @@
 const winston = require('winston');
+const path = require('path');
 
 // Custom error class
 class BadRequestError extends Error {
@@ -16,13 +17,15 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 };
 
 // Logger instance for error logging
+
 const logger = winston.createLogger({
     level: 'error',
     format: winston.format.json(),
     transports: [
-        new winston.transports.File({ filename: 'error.log' })
+        new winston.transports.File({ filename: path.join(__dirname, 'logs', 'error.log') })
     ]
 });
+
 
 // Logging middleware
 const loggingMiddleware = (err, req, res, next) => {
