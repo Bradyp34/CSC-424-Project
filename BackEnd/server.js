@@ -2,6 +2,7 @@ const express = require('express')
 const sqlite = require('better-sqlite3')
 const path = require('path')
 const app = express()
+export {app}
 const PORT = 8080
 
 app.use(express.json())
@@ -18,10 +19,5 @@ app.listen(PORT, () => {
     console.log(`server now live on ${PORT}`)
 })
 
-
-
-function add(a, b) {
-    return a + b;
-  }
   
   module.exports = { add };  

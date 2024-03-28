@@ -1,9 +1,13 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../server.js');
-const { expect } = chai;
+import {chai} from 'chai';
+import {chaiHttp} from 'chai-http';
+import {pkg} from '../server.js';
+const { app } = pkg;
+// import app from '../server.js'; // Ensure the path is correct and '.js' extension is specified
 
+const { expect } = chai;
 chai.use(chaiHttp);
+
+
 
 describe('Server', () => {
   it('should return 200 OK status', (done) => {
