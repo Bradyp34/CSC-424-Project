@@ -1,9 +1,9 @@
-import chai from 'chai';
+import { expect, use } from 'chai'; //import chai from 'chai';
 import chaiHttp from 'chai-http';
 import {app} from '../server.js';
 
-const { expect } = chai;
-chai.use(chaiHttp);
+//const { expect } = chai;
+use(chaiHttp); //chai.use(chaiHttp);
 
 describe('Express Server', () => {
     // Test for the root path
