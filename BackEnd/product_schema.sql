@@ -1,12 +1,12 @@
 DROP TABLE IF EXISTS products;
 
 CREATE TABLE products (
-    product_id integer PRIMARY KEY,
-    product_name varchar(255) NOT NULL,
-    product_type varchar(255) NOT NULL,
-    product_location varchar(255) NOT NULL, -- Corrected column name and added NOT NULL
-    total_product_count integer NOT NULL,
-    product_status varchar(255) DEFAULT 'available' NOT NULL --Default is 'available' can change it to 'sold' and 'on-hold'
-    product_sale_count integer NOT NULL,
-    product_on_hold_count integer NOT NULL --come up with a better name someone
+    product_id INTEGER PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    product_type VARCHAR(255) NOT NULL,
+    product_location VARCHAR(255) NOT NULL,
+    total_product_count INTEGER NOT NULL CHECK (total_product_count >= 0),-- Ensure total count is non-negative
+    product_status VARCHAR(255) NOT NULL DEFAULT 'available' CHECK (product_status IN ('available', 'sold', 'on-hold')), -- Allow only specific values
+    product_sale_count INTEGER NOT NULL CHECK (product_sale_count >= 0), -- Ensure sale count is non-negative
+    product_on_hold_count INTEGER NOT NULL CHECK (product_on_hold_count >= 0) -- Ensure on hold count is non-negative
 );

@@ -1,10 +1,13 @@
 const express = require('express');
 const sqlite = require('better-sqlite3');
 const path = require('path');
+const { errorHandlerMiddleware, loggingMiddleware, BadRequestError } = require('./error_handling/errorHandlers'); //Error Handling
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use(errorHandlerMiddleware);
+app.use(loggingMiddleware);
 
 app.post("/Login", (req, res) => {
     if (req.body.username === undefined || req.body.password === undefined) {
@@ -21,6 +24,8 @@ app.get('/', (req, res) => {
 const server = app.listen(PORT, () => {
     console.log(`server now live on ${PORT}`);
 });
+
+// Error handling middleware
 
 
 module.exports = { app , server};
