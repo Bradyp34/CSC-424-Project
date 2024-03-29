@@ -25,7 +25,6 @@ const server = app.listen(PORT, () => {
     console.log(`server now live on ${PORT}`);
 });
 
-// Error handling middleware
 
 
 module.exports = { app , server};

@@ -8,7 +8,7 @@ describe("Server API Test Suite", function () {
     request(app).get("/").expect(200, done);
   });
 
-  // Test case: Check if greeting message is returned correctly
+  // Test case: Check for valid login
   it("Should return a greeting message", function (done) {
     const expectedGreeting = "Login confirmed";
     const data = {
@@ -31,8 +31,15 @@ describe("Server API Test Suite", function () {
     request(app).get("/invalid").expect(404, done);
   });
 
+  // Test case: Check if administrator can create new admin accounts
+  it("Should allow administrators to create new accounts")
+
   // Close the server after all tests have completed
   after(function () {
     server.close();
   });
 });
+
+/*
+
+*/
