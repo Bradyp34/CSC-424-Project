@@ -41,7 +41,7 @@ describe("Server API Test Suite", function () {
         email: "admin@example.com"
     };
     request(app)
-    .post("/createAccount")
+    .post("/register")
     .send(sampleAccountInformaiton)
     .expect(201) // Code for successful account creation
     .end(function(err, res){
