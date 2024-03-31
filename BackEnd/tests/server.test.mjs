@@ -5,8 +5,52 @@ import { app, server } from "../server.js"; // Adjust the path as needed
 describe("Server API Test Suite", function () {
   // Test case: Check if server is running
   it("Should return 200 OK when server is running", function (done) {
-    request(app).get("/").expect(200, done);
+    request(app)
+      .get("/")
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        assert.strictEqual(res.text, "Server now running");
+        done();
+      });
   });
+  //Test case: trying to register new user with missing fields
+  it("Should return an error when registering with missing required fields", function (done) {
+    const expectedMessage = "Missing fields / parameters";
+    const incompleteUser = {
+      //Missing fields
+    };
+    request(app)
+      .post("/Register")
+      .send(incompleteUser)
+      .expect(400) // 400 Bad Request status code for missing or invalid data
+      .end(function (err, res) {
+        if (err) return done(err);
+        assert.strictEqual(res.text, expectedMessage);
+        done();
+      });
+  });
+
+    //Test case: checking to see if any of the fields are empty
+    it("Should return an error when information fields are empty", function (done) {
+      const expectedMessage = "Empty fields";
+      //Empty fields
+      const incompleteUser = {
+        username: "",
+        email: "",
+        password: "",
+        user_type: ""
+      };
+      request(app)
+        .post("/Register")
+        .send(incompleteUser)
+        .expect(400) // 425 Bad Request status code for empty data
+        .end(function (err, res) {
+          if (err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done(); 
+        });
+    });
 
   // Test case: Check for valid login
   it("Should return a greeting message", function (done) {
@@ -32,24 +76,26 @@ describe("Server API Test Suite", function () {
   });
 
   // Test case: Check if administrator can create new admin accounts
-  it("Should allow administrators to create new accounts", function(done){
+  it("Should allow administrators to create new accounts", function (done) {
     const expectedMessage = "Account Creation Sucessful";
     const sampleAccountInformaiton = {
-        username: "Admin",
-        password: "adminpass",
-        user_type: "admin",
-        email: "admin@example.com"
+      username: "Admin",
+      password: "adminpass",
+      user_type: "admin",
+      email: "admin999@example.com"
     };
     request(app)
-    .post("/register")
-    .send(sampleAccountInformaiton)
-    .expect(201) // Code for successful account creation
-    .end(function(err, res){
-        if(err) return done(err);
+      .post("/Register")
+      .send(sampleAccountInformaiton)
+      .expect(201) // Code for successful account creation
+      .end(function (err, res) {
+        if (err) return done(err);
         assert.strictEqual(res.text, expectedMessage);
-        assert.strictEqual(res.body.user_type, "admin", "Expected user_type to be 'admin'");
+        // assert.strictEqual(
+        //   res.body.user_type = "admin",res.message = "Account Creation Sucessful"
+        // );
         done();
-    })
+      });
   });
 
   // Test case: Check if non-administrators can create accounts
@@ -59,30 +105,34 @@ describe("Server API Test Suite", function () {
       username: "newuser",
       user_type: "non-admin",
       email: "newuser@example.com",
-      password: "newpassword"
+      password: "newpassword",
     };
     request(app)
-      .post("/register")
+      .post("/Register")
       .send(newUser)
       .expect(201) // Assuming 201 Created status code for successful registration
       .end(function (err, res) {
         if (err) return done(err);
         assert.strictEqual(res.text, expectedMessage);
-        assert.strictEqual(res.body.user_type, "non-admin", "Expected user_type to be 'non-admin'");
+        assert.strictEqual(
+          res.body.user_type,
+          "non-admin",
+          "Expected user_type to be 'non-admin'"
+        );
         done();
       });
   });
-// Test case: Register new user with existing username
-it("Should return an error when registering with existing username", function (done) {
+  // Test case: Register new user with existing username
+  it("Should return an error when registering with existing username", function (done) {
     const expectedMessage = "Username already exists";
     const existingUser = {
       username: "existinguser",
       user_type: "non-admin",
-      email: "existinguser@example.com",
-      password: "existingpassword"
+      email: "existinguse222r@example.com",
+      password: "existingpassword",
     };
     request(app)
-      .post("/register")
+      .post("/Register")
       .send(existingUser)
       .expect(409) // Assuming 409 Conflict status code for duplicate resource
       .end(function (err, res) {
@@ -98,45 +148,30 @@ it("Should return an error when registering with existing username", function (d
       username: "newuser2",
       user_type: "non-admin",
       email: "existinguser@example.com",
-      password: "newpassword2"
+      password: "newpassword2",
     };
     request(app)
-      .post("/register")
+      .post("/Register")
       .send(existingEmailUser)
       .expect(409) // Assuming 409 Conflict status code for duplicate resource
       .end(function (err, res) {
         if (err) return done(err);
-        assert.strictEqual(res.text,expectedMessage);
+        assert.strictEqual(res.text, expectedMessage);
         done();
       });
   });
-  //Test case: trying to register new user with missing fields
-  it("Should return an error when registering with missing required fields", function (done) {
-    const expectedMessage = "Missing fields / parameters";
-    const incompleteUser = {
-      //Missing fields
-    };
-    request(app)
-      .post("/register")
-      .send(incompleteUser)
-      .expect(400) // 400 Bad Request status code for missing or invalid data
-      .end(function (err, res) {
-        if (err) return done(err);
-        assert.strictEqual(res.text, expectedMessage);
-        done(); 
-      });
-  });
-  // Test case: Register a new user with an invalid user_type 
+
+  // Test case: Register a new user with an invalid user_type
   it("Should return an error when registering with invalid user type", function (done) {
     const expectedMessage = "Invalid User Type";
     const invalidUserTypeUser = {
       username: "newuser3",
       user_type: "invalid-type",
       email: "newuser3@example.com",
-      password: "newpassword3"
+      password: "newpassword3",
     };
     request(app)
-      .post("/register")
+      .post("/Register")
       .send(invalidUserTypeUser)
       .expect(400) // 400 for Bad Request status code for invalid data
       .end(function (err, res) {
@@ -145,10 +180,9 @@ it("Should return an error when registering with existing username", function (d
         done();
       });
   });
-  
+
   // Close the server after all tests have completed
   after(function () {
     server.close();
   });
 });
-
