@@ -11,7 +11,7 @@ const fs = require("fs");
 const { debugPort } = require("process");
 const PORT = 3000;
 const activity_log_file = "log.txt";
-const current_time = new Date()
+const current_time = new Date();
 
 const db = sqlite("database.db");
 const file_date = fs.readFileSync(
@@ -20,22 +20,28 @@ const file_date = fs.readFileSync(
 );
 db.exec(file_date);
 
+const log = `Server live on port ${PORT}. At ${current_time}\n`;
+fs.appendFile(activity_log_file, log, (error) => {
+  if (error) {
+    console.log(err);
+    process.exit(0);
+  } else {
+    console.log("successfully logged")
+  }
+});
+
 app.use(express.json());
 app.use(errorHandlerMiddleware);
 app.use(loggingMiddleware);
 
 app.get("/", (req, res) => {
-    const log = `Server live on port ${PORT}. At ${current_time}\n`
-    fs.appendFile(activity_log_file, log, (err) => {
-        if (err) {
-            console.log(err)
-            process.exit(0)
-        }
-        else 
-        {
-            console.log("successfully logged")
-        }
-    })
+  const log = `Server live on port ${PORT}. At ${current_time}\n`;
+  fs.appendFile(activity_log_file, log, (err) => {
+    if (err) {
+    } else {
+      console.log("successfully logged");
+    }
+  });
   res.status(200).send("Server now running");
 });
 
