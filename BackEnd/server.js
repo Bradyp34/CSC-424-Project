@@ -87,6 +87,14 @@ app.post("/Register", async (req, res) => {
     res.status(400).send("Invalid User Type");
     return;
   }
+  // It is in this format right now because of debugging purposes it is not supposed to be like this. 
+  // This works perfectly fine in postman
+  // One of the recomendations / suggestion that I make is that we could have some sort of log in or verification before the Register
+  // Page that is the most easiest eay to do this and is way less hassle. Or make the Register page available to only admin users
+  // I am not sure How that would work but that is waaaaaaaaaaay less annoying than this.
+  // if you attempt to fix the user name already exists and email exists cases they also fall under this for some reason.
+  // I did fix the invalid user test case.
+  // Think about my suggestion. 
   
   if(!adminInfo)
   {
@@ -113,7 +121,8 @@ app.post("/Register", async (req, res) => {
       return res.status(500).send("Internal server error");
     }
 }
-
+//This is the problem area basically I am sending a header with admin credentials and parsing that into a function that checks the data 
+//to that of an existing admin in the database and then goes to account creation.
   const adminCredentials = JSON.parse(adminInfo);
   if (!(await isValidAdmin(adminCredentials))) {
     return res.status(400).send("Unauthorized: Invalid admin credentials");
