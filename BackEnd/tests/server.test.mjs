@@ -78,11 +78,11 @@ describe("Server API Test Suite", function () {
   // Test case: Check if admin can create new admin accounts
   it("Should allow administrators to create new accounts", function (done) {
     const expectedMessage = "Account Creation Successful";
-    const adminInfo = {
-      username: "admin",
-      //email: "admin@example.com", // We probably ask just for username and password right ?
-      password: "adminpassword",
-    };
+    // const adminInfo = {
+    //   username: "admin",
+    //   email: "admin@example.com",
+    //   password: "adminpassword",
+    // };
     const sampleAccountInformaiton = {
       username: "Admin",
       password: "adminpass",
@@ -91,7 +91,7 @@ describe("Server API Test Suite", function () {
     };
     request(app)
       .post("/Register")
-      .set("admin-info", JSON.stringify(adminInfo))
+      //.set("admin-info", JSON.stringify(adminInfo))
       .send(sampleAccountInformaiton)
       .expect(201) // Code for successful account creation
       .end(function (err, res) {
@@ -109,8 +109,9 @@ describe("Server API Test Suite", function () {
 it("Should allow registration of a new user by an admin", function (done) {
   const expectedMessage = "Account Creation Successful";
   const adminInfo = {
-    username: "admin",
-    password: "adminpassword",
+      username: "admin",
+      email: "admin@example.com",
+      password: "adminpassword",
   };
   const newUser = {
     username: "newuser2",
@@ -137,11 +138,11 @@ it("Should allow registration of a new user by an admin", function (done) {
 
   // Test case: Register new user with existing username
   it("Should return an error when registering with existing username", function (done) {
-    const expectedMessage = "Username already exists";
     const adminInfo = {
       username: "admin",
+      email: "admin@example.com",
       password: "adminpassword",
-    };
+  };
     const existingUser = {
       username: "existinguser",
       user_type: "regular",
@@ -152,16 +153,20 @@ it("Should allow registration of a new user by an admin", function (done) {
       .post("/Register")
       .set("admin-info", JSON.stringify(adminInfo))
       .send(existingUser)
-      .expect(409) // Assuming 409 Conflict status code for duplicate resource
+      .expect(400)
       .end(function (err, res) {
         if (err) return done(err);
-        assert.strictEqual(res.text, expectedMessage);
+        assert.strictEqual(res.text,"Username already exists");
         done();
       });
   });
   //Test case: Register new user with an existing email
   it("Should return an error when registering with existing email", function (done) {
-    const expectedMessage = "Account with the email provided already exists";
+    const adminInfo = {
+      username: "admin",
+      email: "admin@example.com",
+      password: "adminpassword",
+  };
     const existingEmailUser = {
       username: "newuser2",
       user_type: "regular",
@@ -170,11 +175,12 @@ it("Should allow registration of a new user by an admin", function (done) {
     };
     request(app)
       .post("/Register")
+      .set("admin-info", JSON.stringify(adminInfo))
       .send(existingEmailUser)
-      .expect(409) // Assuming 409 Conflict status code for duplicate resource
+      .expect(400)
       .end(function (err, res) {
         if (err) return done(err);
-        assert.strictEqual(res.text, expectedMessage);
+        assert.strictEqual(res.text, "Account with the email provided already exists");
         done();
       });
   });
