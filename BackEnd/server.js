@@ -9,6 +9,7 @@ const {
 const app = express();
 const fs = require("fs");
 const { debugPort } = require("process");
+const { use } = require("chai");
 const PORT = 3000;
 const activity_log_file = "log.txt";
 const current_time = new Date();
@@ -50,6 +51,12 @@ app.get("/all_users", async (req, res) => {
   res.status(200).send(statement);
 });
 
+async function isValidAdmin(adminCredentials){
+  const {username, user_password} = adminCredentials;
+  const admin = await db.prepare("select * from user where username = ? and user_password = ? and user_type = 'admin'" ).get(username, user_password);
+  return admin != undefined;
+}
+
 app.post("/Register", async (req, res) => {
   const { username, email, password, user_type } = req.body;
   if (
@@ -66,10 +73,19 @@ app.post("/Register", async (req, res) => {
     res.status(400).send("Empty fields");
     return;
   }
-
+// Why are we doing this? 
   if (user_type !== "admin") {
     res.status(400).send("Invalid User Type");
     return;
+  }
+
+  const adminInfo = req.headers["admin-info"];
+  if(!adminInfo){
+    return res.status(400).send("Unauthorized: Only admins can create new accounts");
+  }
+  const adminCredentials = JSON.parse(adminInfo);
+  if (!(await isValidAdmin(adminCredentials))) {
+    return res.status(400).send("Unauthorized: Invalid admin credentials");
   }
   try {
     const statement = db.prepare(
