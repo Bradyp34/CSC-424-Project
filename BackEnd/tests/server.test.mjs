@@ -75,9 +75,14 @@ describe("Server API Test Suite", function () {
     request(app).get("/invalid").expect(404, done);
   });
 
-  // Test case: Check if administrator can create new admin accounts
+  // Test case: Check if admin can create new admin accounts
   it("Should allow administrators to create new accounts", function (done) {
-    const expectedMessage = "Account Creation Sucessful";
+    const expectedMessage = "Account Creation Successful";
+    const adminInfo = {
+      username: "admin",
+      //email: "admin@example.com", // We probably ask just for username and password right ?
+      password: "adminpassword",
+    };
     const sampleAccountInformaiton = {
       username: "Admin",
       password: "adminpass",
@@ -86,53 +91,66 @@ describe("Server API Test Suite", function () {
     };
     request(app)
       .post("/Register")
+      .set("admin-info", JSON.stringify(adminInfo))
       .send(sampleAccountInformaiton)
       .expect(201) // Code for successful account creation
       .end(function (err, res) {
         if (err) return done(err);
         assert.strictEqual(res.text, expectedMessage);
-        // assert.strictEqual(
-        //   res.body.user_type = "admin",res.message = "Account Creation Sucessful"
-        // );
-        done();
-      });
-  });
-
-  // Test case: Check if non-administrators can create accounts
-  it("Should allow registration of a new user", function (done) {
-    const expectedMessage = "Account Creation Sucessful";
-    const newUser = {
-      username: "newuser",
-      user_type: "non-admin",
-      email: "newuser@example.com",
-      password: "newpassword",
-    };
-    request(app)
-      .post("/Register")
-      .send(newUser)
-      .expect(201) // Assuming 201 Created status code for successful registration
-      .end(function (err, res) {
-        if (err) return done(err);
-        assert.strictEqual(res.text, expectedMessage);
-        assert.strictEqual(
-          res.body.user_type,
-          "non-admin",
-          "Expected user_type to be 'non-admin'"
+         assert.strictEqual(
+           res.body.user_type, 
+           "admin",  "Expected user_type to be 'admin'"
         );
         done();
       });
   });
+
+  // Test case: Check if an admin can register a new regular account
+it("Should allow registration of a new user by an admin", function (done) {
+  const expectedMessage = "Account Creation Successful";
+  const adminInfo = {
+    username: "admin",
+    password: "adminpassword",
+  };
+  const newUser = {
+    username: "newuser2",
+    email: "newuser2@example.com",
+    password: "newpassword2",
+    user_type: "regular",
+  };
+  request(app)
+    .post("/Register")
+    .set("admin-info", JSON.stringify(adminInfo))
+    .send(newUser)
+    .expect(201)
+    .end(function (err, res) {
+      if (err) return done(err);
+      assert.strictEqual(res.text, expectedMessage);
+      assert.strictEqual(
+        res.body.user_type,
+        "regular",
+        "Expected user_type to be 'regular'"
+      );
+      done();
+    });
+});
+
   // Test case: Register new user with existing username
   it("Should return an error when registering with existing username", function (done) {
     const expectedMessage = "Username already exists";
+    const adminInfo = {
+      username: "admin",
+      password: "adminpassword",
+    };
     const existingUser = {
       username: "existinguser",
-      user_type: "non-admin",
+      user_type: "regular",
       email: "existinguse222r@example.com",
       password: "existingpassword",
     };
     request(app)
       .post("/Register")
+      .set("admin-info", JSON.stringify(adminInfo))
       .send(existingUser)
       .expect(409) // Assuming 409 Conflict status code for duplicate resource
       .end(function (err, res) {
@@ -146,7 +164,7 @@ describe("Server API Test Suite", function () {
     const expectedMessage = "Account with the email provided already exists";
     const existingEmailUser = {
       username: "newuser2",
-      user_type: "non-admin",
+      user_type: "regular",
       email: "existinguser@example.com",
       password: "newpassword2",
     };
