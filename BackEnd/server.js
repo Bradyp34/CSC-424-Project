@@ -9,7 +9,7 @@ const {
 const app = express();
 const fs = require("fs");
 const { debugPort } = require("process");
-const { use } = require("chai");
+const { use } = import("chai");
 const PORT = 3000;
 const activity_log_file = "log.txt";
 const current_time = new Date();
@@ -52,12 +52,21 @@ app.get("/all_users", async (req, res) => {
 });
 
 async function isValidAdmin(adminCredentials){
-  const {username, user_password} = adminCredentials;
-  const admin = await db.prepare("select * from user where username = ? and user_password = ? and user_type = 'admin'" ).get(username, user_password);
-  return admin != undefined;
+  try {
+    const {username, email, password} = adminCredentials;
+    console.log("Validating admin credentials:", adminCredentials);// Debugging purposes
+    const admin = await db.prepare("select * from users where username = ? and email = ? and password = ? and user_type = 'admin'").get(username, email, password);
+    console.log("Admin found:", admin);// Debugging purposes
+    return admin != undefined;
+  } catch (error) {
+    console.error("Error validating admin credentials:", error);
+    return false;
+  }
 }
 
+
 app.post("/Register", async (req, res) => {
+  const adminInfo = req.headers["admin-info"];
   const { username, email, password, user_type } = req.body;
   if (
     username === undefined ||
@@ -73,32 +82,43 @@ app.post("/Register", async (req, res) => {
     res.status(400).send("Empty fields");
     return;
   }
-// Why are we doing this? 
-  if (user_type !== "admin") {
+ 
+  if (user_type !== "admin" && user_type !=="regular") {
     res.status(400).send("Invalid User Type");
     return;
   }
+  
+  if(!adminInfo)
+  {
+    const repeated_username = db.prepare("select * from users where username = ?").get(username);
+    if(repeated_username !== undefined ){
+      res.status(400).send("Username already exists");
+      return;
+    }
+    const repeated_email = db.prepare("select * from users where email = ?").get(email);
+    if(repeated_email !== undefined){
+      res.status(400).send("Account with the email provided already exists");
+      return;
+    }
+    try {
+      const statement = db.prepare(
+        "insert into users(username, user_type, email, password) values(?, ?, ? ,?)"
+      );
+     // const user_type = "admin";
+      const response = statement.run(username, user_type, email, password);
+      //   console.log("Account Creation sucessful")
+      return res.status(201).send("Account Creation Sucessful");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send("Internal server error");
+    }
+}
 
-  const adminInfo = req.headers["admin-info"];
-  if(!adminInfo){
-    return res.status(400).send("Unauthorized: Only admins can create new accounts");
-  }
   const adminCredentials = JSON.parse(adminInfo);
   if (!(await isValidAdmin(adminCredentials))) {
     return res.status(400).send("Unauthorized: Invalid admin credentials");
   }
-  try {
-    const statement = db.prepare(
-      "insert into users(username, user_type, email, user_password) values(?, ?, ? ,?)"
-    );
-    const user_type = "admin";
-    const response = statement.run(username, user_type, email, password);
-    //   console.log("Account Creation sucessful")
-    res.status(201).send("Account Creation Sucessful");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal server error");
-  }
+
 });
 
 app.post("/Login", async (req, res) => {
