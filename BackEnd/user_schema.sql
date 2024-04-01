@@ -5,5 +5,5 @@ CREATE TABLE users (
     username varchar(255) NOT NULL UNIQUE,
     user_type varchar(50) NOT NULL DEFAULT 'regular' CHECK(user_type IN ('regular', 'admin')), --Changed to 'regular'
     email varchar(255) NOT NULL UNIQUE,
-    user_password varchar(255) NOT NULL
+    password varchar(255) NOT NULL
 );
