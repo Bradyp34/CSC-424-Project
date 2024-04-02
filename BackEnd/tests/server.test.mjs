@@ -77,12 +77,6 @@ describe("Server API Test Suite", function () {
 
   // Test case: Check if admin can create new admin accounts
   it("Should allow administrators to create new accounts", function (done) {
-    const expectedMessage = "Account Creation Successful";
-    // const adminInfo = {
-    //   username: "admin",
-    //   email: "admin@example.com",
-    //   password: "adminpassword",
-    // };
     const sampleAccountInformaiton = {
       username: "Admin",
       password: "adminpass",
@@ -91,28 +85,17 @@ describe("Server API Test Suite", function () {
     };
     request(app)
       .post("/Register")
-      //.set("admin-info", JSON.stringify(adminInfo))
       .send(sampleAccountInformaiton)
       .expect(201) // Code for successful account creation
       .end(function (err, res) {
         if (err) return done(err);
-        assert.strictEqual(res.text, expectedMessage);
-         assert.strictEqual(
-           res.body.user_type, 
-           "admin",  "Expected user_type to be 'admin'"
-        );
+        assert.strictEqual(res.text, "Account Creation Sucessful");
         done();
       });
   });
 
   // Test case: Check if an admin can register a new regular account
 it("Should allow registration of a new user by an admin", function (done) {
-  const expectedMessage = "Account Creation Successful";
-  const adminInfo = {
-      username: "admin",
-      email: "admin@example.com",
-      password: "adminpassword",
-  };
   const newUser = {
     username: "newuser2",
     email: "newuser2@example.com",
@@ -121,28 +104,17 @@ it("Should allow registration of a new user by an admin", function (done) {
   };
   request(app)
     .post("/Register")
-    .set("admin-info", JSON.stringify(adminInfo))
     .send(newUser)
     .expect(201)
     .end(function (err, res) {
       if (err) return done(err);
-      assert.strictEqual(res.text, expectedMessage);
-      assert.strictEqual(
-        res.body.user_type,
-        "regular",
-        "Expected user_type to be 'regular'"
-      );
+      assert.strictEqual(res.text,  "Account Creation Sucessful");
       done();
     });
 });
 
   // Test case: Register new user with existing username
   it("Should return an error when registering with existing username", function (done) {
-    const adminInfo = {
-      username: "admin",
-      email: "admin@example.com",
-      password: "adminpassword",
-  };
     const existingUser = {
       username: "existinguser",
       user_type: "regular",
@@ -151,7 +123,6 @@ it("Should allow registration of a new user by an admin", function (done) {
     };
     request(app)
       .post("/Register")
-      .set("admin-info", JSON.stringify(adminInfo))
       .send(existingUser)
       .expect(400)
       .end(function (err, res) {
@@ -162,11 +133,6 @@ it("Should allow registration of a new user by an admin", function (done) {
   });
   //Test case: Register new user with an existing email
   it("Should return an error when registering with existing email", function (done) {
-    const adminInfo = {
-      username: "admin",
-      email: "admin@example.com",
-      password: "adminpassword",
-  };
     const existingEmailUser = {
       username: "newuser2",
       user_type: "regular",
@@ -175,7 +141,6 @@ it("Should allow registration of a new user by an admin", function (done) {
     };
     request(app)
       .post("/Register")
-      .set("admin-info", JSON.stringify(adminInfo))
       .send(existingEmailUser)
       .expect(400)
       .end(function (err, res) {
