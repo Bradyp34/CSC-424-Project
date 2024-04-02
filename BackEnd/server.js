@@ -52,18 +52,6 @@ app.get("/all_users", async (req, res) => {
   res.status(200).send(statement);
 });
 
-// async function isValidAdmin(adminCredentials){
-//   try {
-//     const {username, email, password} = adminCredentials;
-//     console.log("Validating admin credentials:", adminCredentials);// Debugging purposes
-//     const admin = await db.prepare("select * from users where username = ? and email = ? and password = ? and user_type = 'admin'").get(username, email, password);
-//     console.log("Admin found:", admin);// Debugging purposes
-//     return admin != undefined;
-//   } catch (error) {
-//     console.error("Error validating admin credentials:", error);
-//     return false;
-//   }
-// }
 
 app.post("/Register", async (req, res) => {
 
@@ -89,7 +77,6 @@ app.post("/Register", async (req, res) => {
   } 
 
     const repeated_username = db.prepare("select * from users where username = ?").all(username);
-    console.log(repeated_username, repeated_username.length)
     if(repeated_username.length > 0){
       res.status(400).send("Username already exists");
       return;
@@ -100,7 +87,6 @@ app.post("/Register", async (req, res) => {
       return;
     }
     try {
-      console.log("Hello");
       const statement = db.prepare(
         "insert into users(username, user_type, email, password) values(?, ?, ? ,?)"
       );
