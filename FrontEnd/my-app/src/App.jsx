@@ -8,8 +8,7 @@ function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <Login></Login>
-      <Register></Register>
+      <div className='text-white'>Main Page</div>
     </div>
   );
 }
