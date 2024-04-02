@@ -7,8 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  backend-test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,25 +22,40 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: BackEnd/package-lock.json
-
-    # Navigate to the BackEnd directory
-    - name: Change directory to BackEnd
-      run: cd BackEnd
-
-    # Install dependencies in the BackEnd directory
-    - name: Install dependencies
+    - name: Install Backend dependencies
       run: |
         cd BackEnd
         npm ci
-
-    # If your project requires a build step, execute it here
-    - name: Build
+    - name: Build Backend
       run: |
         cd BackEnd
         npm run build --if-present
-
-    # Run tests from the BackEnd directory (assuming your npm test script handles navigating to tests or directly references them)
-    - name: Test
+    - name: Test Backend
       run: |
         cd BackEnd
+        npm test
+
+  front-end-test:
+    needs: backend-test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: FrontEnd/my-app/package-lock.json
+    - name: Install Frontend dependencies
+      run: |
+        cd FrontEnd/my-app
+        npm ci
+    - name: Run Frontend tests
+      run: |
+        cd FrontEnd/my-app
         npm test
