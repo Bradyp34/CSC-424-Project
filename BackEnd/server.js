@@ -66,7 +66,7 @@ app.get("/all_users", async (req, res) => {
 // }
 
 app.post("/Register", async (req, res) => {
-  const adminInfo = req.headers["admin-info"];
+
   const { username, email, password, user_type } = req.body;
   if (
     username === undefined ||
@@ -88,23 +88,23 @@ app.post("/Register", async (req, res) => {
     return;
   } 
 
-    const repeated_username = db.prepare("select * from users where username = ?").get(username);
-    if(repeated_username !== undefined ){
+    const repeated_username = db.prepare("select * from users where username = ?").all(username);
+    console.log(repeated_username, repeated_username.length)
+    if(repeated_username.length > 0){
       res.status(400).send("Username already exists");
       return;
     }
-    const repeated_email = db.prepare("select * from users where email = ?").get(email);
-    if(repeated_email !== undefined){
+    const repeated_email = db.prepare("select * from users where email = ?").all(email);
+    if(repeated_email.length !== 0){
       res.status(400).send("Account with the email provided already exists");
       return;
     }
     try {
+      console.log("Hello");
       const statement = db.prepare(
         "insert into users(username, user_type, email, password) values(?, ?, ? ,?)"
       );
-     // const user_type = "admin";
       const response = statement.run(username, user_type, email, password);
-      //   console.log("Account Creation sucessful")
       return res.status(201).send("Account Creation Sucessful");
     } catch (error) {
       console.log(error);
