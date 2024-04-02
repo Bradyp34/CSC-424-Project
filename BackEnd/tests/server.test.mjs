@@ -116,11 +116,12 @@ it("Should allow registration of a new user by an admin", function (done) {
   // Test case: Register new user with existing username
   it("Should return an error when registering with existing username", function (done) {
     const existingUser = {
-      username: "existinguser",
+      username: "newuser2",
+      email: "newuser233@example.com",
+      password: "newpassword2",
       user_type: "regular",
-      email: "existinguse222r@example.com",
-      password: "existingpassword",
     };
+
     request(app)
       .post("/Register")
       .send(existingUser)
@@ -134,10 +135,10 @@ it("Should allow registration of a new user by an admin", function (done) {
   //Test case: Register new user with an existing email
   it("Should return an error when registering with existing email", function (done) {
     const existingEmailUser = {
-      username: "newuser2",
-      user_type: "regular",
-      email: "existinguser@example.com",
+      username: "newuser21",
+      email: "newuser2@example.com",
       password: "newpassword2",
+      user_type: "regular",
     };
     request(app)
       .post("/Register")
