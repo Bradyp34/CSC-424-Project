@@ -36,7 +36,6 @@ jobs:
         npm test
 
   front-end-test:
-    needs: backend-test
     runs-on: ubuntu-latest
 
     strategy:
