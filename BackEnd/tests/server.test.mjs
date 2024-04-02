@@ -204,7 +204,23 @@ it("Should allow registration of a new user by an admin", function (done) {
         done();
       });
   });
-
+  // Test case: Admin can remove a user(For now it is just able to remove user)
+  it("Should allow the removal of a user", function(done){
+    const expectedMessage = "User Removed";
+    const userToBeRemoved = {
+      username: "existingUser",
+      email: "existingUser@example.com"
+    };
+    request(app)
+      .post("/RemoveUser")
+      .send(userToBeRemoved)
+      .expect(201) // User Removal is sucessful 
+      .end(function(err, res){
+        if(err) return done(err);
+        assert.strictEqual(res.text, expectedMessage);
+        done();
+      });
+  });
   // Close the server after all tests have completed
   after(function () {
     server.close();
