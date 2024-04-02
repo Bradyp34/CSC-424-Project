@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
   const log = `Server live on port ${PORT}. At ${current_time}\n`;
   fs.appendFile(activity_log_file, log, (err) => {
     if (err) {
+      console.log(err)
     } else {
       console.log("successfully logged");
     }
