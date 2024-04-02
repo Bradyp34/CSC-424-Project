@@ -6,7 +6,6 @@ function LoginPage() {
     <div>
       <Navbar></Navbar>
       <div className='text-white'>Login Page</div>
-      <span className='loginTitle'>Login</span>
       <form className='loginForm'>
         <label>Email</label>
         <input className='loginInput' type='text' placeholder='Enter your email...' />
