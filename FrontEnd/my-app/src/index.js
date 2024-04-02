@@ -9,7 +9,8 @@ import AccountPage from './Pages/AccountPage';
 
 import {
   createBrowserRouter,
-  RouterProvider,
+    RouterProvider,
+    // eslint-disable-next-line
   Route,
 } from "react-router-dom";
 
