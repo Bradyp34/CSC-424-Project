@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
   const log = `Server live on port ${PORT}. At ${current_time}\n`;
   fs.appendFile(activity_log_file, log, (err) => {
     if (err) {
+      console.log(err)
     } else {
       console.log("successfully logged");
     }
@@ -51,19 +52,18 @@ app.get("/all_users", async (req, res) => {
   res.status(200).send(statement);
 });
 
-async function isValidAdmin(adminCredentials){
-  try {
-    const {username, email, password} = adminCredentials;
-    console.log("Validating admin credentials:", adminCredentials);// Debugging purposes
-    const admin = await db.prepare("select * from users where username = ? and email = ? and password = ? and user_type = 'admin'").get(username, email, password);
-    console.log("Admin found:", admin);// Debugging purposes
-    return admin != undefined;
-  } catch (error) {
-    console.error("Error validating admin credentials:", error);
-    return false;
-  }
-}
-
+// async function isValidAdmin(adminCredentials){
+//   try {
+//     const {username, email, password} = adminCredentials;
+//     console.log("Validating admin credentials:", adminCredentials);// Debugging purposes
+//     const admin = await db.prepare("select * from users where username = ? and email = ? and password = ? and user_type = 'admin'").get(username, email, password);
+//     console.log("Admin found:", admin);// Debugging purposes
+//     return admin != undefined;
+//   } catch (error) {
+//     console.error("Error validating admin credentials:", error);
+//     return false;
+//   }
+// }
 
 app.post("/Register", async (req, res) => {
   const adminInfo = req.headers["admin-info"];
@@ -86,18 +86,8 @@ app.post("/Register", async (req, res) => {
   if (user_type !== "admin" && user_type !=="regular") {
     res.status(400).send("Invalid User Type");
     return;
-  }
-  // It is in this format right now because of debugging purposes it is not supposed to be like this. 
-  // This works perfectly fine in postman
-  // One of the recomendations / suggestion that I make is that we could have some sort of log in or verification before the Register
-  // Page that is the most easiest eay to do this and is way less hassle. Or make the Register page available to only admin users
-  // I am not sure How that would work but that is waaaaaaaaaaay less annoying than this.
-  // if you attempt to fix the user name already exists and email exists cases they also fall under this for some reason.
-  // I did fix the invalid user test case.
-  // Think about my suggestion. 
-  
-  if(!adminInfo)
-  {
+  } 
+
     const repeated_username = db.prepare("select * from users where username = ?").get(username);
     if(repeated_username !== undefined ){
       res.status(400).send("Username already exists");
@@ -120,13 +110,6 @@ app.post("/Register", async (req, res) => {
       console.log(error);
       return res.status(500).send("Internal server error");
     }
-}
-//This is the problem area basically I am sending a header with admin credentials and parsing that into a function that checks the data 
-//to that of an existing admin in the database and then goes to account creation.
-  const adminCredentials = JSON.parse(adminInfo);
-  if (!(await isValidAdmin(adminCredentials))) {
-    return res.status(400).send("Unauthorized: Invalid admin credentials");
-  }
 
 });
 
@@ -142,3 +125,5 @@ const server = app.listen(PORT, () => {
 });
 
 module.exports = { app, server };
+
+
