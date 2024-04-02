@@ -5,6 +5,7 @@ function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
+      <div className='text-white'>Main Page</div>
     </div>
   );
 }
