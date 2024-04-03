@@ -99,7 +99,7 @@ app.post("/Register", async (req, res) => {
 
 });
 
-app.post("/Login", async (req, res) => {
+/* app.post("/Login", async (req, res) => {
   if (req.body.username === undefined || req.body.password === undefined) {
     res.status(400).send("Hello, world!");
   }
@@ -108,7 +108,29 @@ app.post("/Login", async (req, res) => {
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
-});
+}); */
+
+app.post("/Login", async (req, res) => {
+  const { username, password } = req.body;
+ 
+  if (!username || !password) {
+     return res.status(400).send("Username and password are required");
+  }
+ 
+  const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+  if (!user) {
+     return res.status(400).send("Invalid username or password");
+  }
+ 
+  if (user.password !== password) {
+     return res.status(400).send("Invalid username or password");
+  }
+ 
+  // If the password matches, proceed with the login process
+  // This could involve setting a session or token for the user
+  res.status(200).send("Login successful");
+ });
+ 
 
 module.exports = { app, server };
 
