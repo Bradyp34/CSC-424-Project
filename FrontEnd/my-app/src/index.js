@@ -6,6 +6,7 @@ import LoginPage from './Pages/LoginPage';
 import ItemSearchPage from './Pages/ItemSearchPage';
 import InventoryPage from './Pages/InventoryPage';
 import AccountPage from './Pages/AccountPage';
+import LoginSuccess from './Pages/LoginSuccess';
 
 import {
   createBrowserRouter,
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     path: "Account",
     element: <AccountPage/>,
   },
+  {
+    path:"LoginSuccess",
+    element: <LoginSuccess/>
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

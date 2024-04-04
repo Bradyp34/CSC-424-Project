@@ -40,6 +40,21 @@ Server live on port 3000. At Thu Apr 04 2024 13:27:48 GMT-0500 (Central Daylight
 Server live on port 3000. At Thu Apr 04 2024 13:27:48 GMT-0500 (Central Daylight Time)
 Server live on port 3000. At Thu Apr 04 2024 13:28:57 GMT-0500 (Central Daylight Time)
 Server live on port 3000. At Thu Apr 04 2024 13:28:57 GMT-0500 (Central Daylight Time)
+<<<<<<<< HEAD:BackEnd/log.txt
+Server live on port 3000. At Thu Apr 04 2024 14:44:45 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:44:45 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:45:05 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:45:05 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:45:24 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:45:24 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:45:41 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 14:45:41 GMT-0500 (Central Daylight Time)
+Server live on port 3000. At Thu Apr 04 2024 15:38:09 GMT-0500 (Central Daylight Time)
+Server live on port 8080. At Thu Apr 04 2024 15:43:55 GMT-0500 (Central Daylight Time)
+Server live on port 8080. At Thu Apr 04 2024 15:49:39 GMT-0500 (Central Daylight Time)
+Server live on port 8080. At Thu Apr 04 2024 15:52:02 GMT-0500 (Central Daylight Time)
+Server live on port 8080. At Thu Apr 04 2024 15:54:53 GMT-0500 (Central Daylight Time)
+========
 Server live on port 3000. At Thu Apr 04 2024 15:20:48 GMT-0500 (Central Daylight Time)
 Server live on port 3000. At Thu Apr 04 2024 15:20:48 GMT-0500 (Central Daylight Time)
 Server live on port 3000. At Thu Apr 04 2024 15:21:50 GMT-0500 (Central Daylight Time)
@@ -48,3 +63,5 @@ Server live on port 3000. At Thu Apr 04 2024 15:28:42 GMT-0500 (Central Daylight
 Server live on port 3000. At Thu Apr 04 2024 15:28:42 GMT-0500 (Central Daylight Time)
 Server live on port 3000. At Thu Apr 04 2024 15:42:31 GMT-0500 (Central Daylight Time)
 Server live on port 3000. At Thu Apr 04 2024 15:42:31 GMT-0500 (Central Daylight Time)
+>>>>>>>> 6e61cd21b514dbb927686ad86a2872aa7fbc1d1e:BackEnd/log.log
+Server live on port 8080. At Thu Apr 04 2024 16:45:54 GMT-0500 (Central Daylight Time)
