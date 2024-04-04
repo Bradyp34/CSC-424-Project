@@ -18,18 +18,20 @@ function ItemSearchPage() {
     fetchItems(searchQuery).then(() => setSearchQuery(''));
  };
 
- // Function to fetch items from the backend
- const fetchItems = async (query) => {
-    try {
+// Function to fetch items from the backend
+const fetchItems = async (query) => {
+  setLoading(true); // Start loading
+  try {
       const response = await fetch(`https://your-api-endpoint.com/items?search=${query}`);
       const data = await response.json();
-      setSearchResults(data.items); // Assuming the API returns an array of items
-    } catch (error) {
+      setSearchResults(data.items); 
+  } catch (error) {
       console.error('Error fetching items:', error);
-    } finally {
-      setLoading(false);
-    }
- };
+  } finally {
+      setLoading(false); 
+  }
+};
+
 
  return (
     <div>
