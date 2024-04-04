@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 
 function ItemSearchPage() {
@@ -6,33 +6,25 @@ function ItemSearchPage() {
  const [searchResults, setSearchResults] = useState([]);
  const [searchPerformed, setSearchPerformed] = useState(false);
 
- // Predefined list of items for demonstration
- const items = [
-    { id: 1, name: 'Apple' },
-    { id: 2, name: 'Banana' },
-    { id: 3, name: 'Book' },
-    { id: 4, name: 'fasdfsadfsadfsadfsadfsadfasdfsadfsadfsadfsadf'}
-
- ];
-
  const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    filterItems(event.target.value);
  };
 
  const handleSearchSubmit = (event) => {
     event.preventDefault();
-    // Logic for handling search query submission
-    console.log('Search query:', searchQuery);
+    setSearchPerformed(true); // Indicate that a search has been performed
+    // Fetch data from the backend
+    fetchItems(searchQuery);
  };
 
- // Function to filter items based on the search query
- const filterItems = (query) => {
-    if (query) {
-      const filtered = items.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
-      setSearchResults(filtered);
-    } else {
-      setSearchResults([]);
+ // Function to fetch items from the backend
+ const fetchItems = async (query) => {
+    try {
+      const response = await fetch(`https://your-api-endpoint.com/items?search=${query}`);
+      const data = await response.json();
+      setSearchResults(data.items); // Assuming the API returns an array of items
+    } catch (error) {
+      console.error('Error fetching items:', error);
     }
  };
 
@@ -75,4 +67,5 @@ function ItemSearchPage() {
     </div>
  );
 }
+
 export default ItemSearchPage;
