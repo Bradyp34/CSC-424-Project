@@ -21,6 +21,10 @@ const file_date = fs.readFileSync(
 );
 db.exec(file_date);
 
+const product_db = sqlite("product_database.db");
+const product_file_data = fs.readFileSync( path.resolve(__dirname, "product_schema.sql"), "utf-8");
+product_db.exec(product_file_data);
+
 const log = `Server live on port ${PORT}. At ${current_time}\n`;
 fs.appendFile(activity_log_file, log, (error) => {
   if (error) {
@@ -139,11 +143,27 @@ app.post("/Login", async (req, res) => {
     }
     res.status(200).send("Login confirmed");
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).send("Internal server error");
   }
 });
 
+app.post("/addProduct", async(req, res)=>{
+try{
+  const {product_name, product_type, product_location, total_product_count} = req.body;
+  if(!product_name || !product_type || !product_location || !total_product_count){
+    return res.status(400).send("Missing Parameters");
+  }
+  const statement = product_db.prepare("insert into products(product_name, product_type, product_location, total_product_count) values(?, ?, ?, ?)");
+  statement.run(product_name, product_type, product_location, total_product_count);
+  return res.status(201).send("Product added sucessfully");
+}
+catch(error){
+    console.error(error);
+    res.status(500).send("Internal server error");
+}
+
+});
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
