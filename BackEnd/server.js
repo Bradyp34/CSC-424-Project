@@ -120,11 +120,30 @@ app.post("/removeUser", async (req, res) => {
 
 
 app.post("/Login", async (req, res) => {
-  if (req.body.username === undefined || req.body.password === undefined) {
-    res.status(400).send("Username or Password Missing!");
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).send("Username or Password Missing!");
+    }
+
+    const statement = db.prepare("SELECT * FROM users WHERE username = ?");
+    const user = statement.get(username);
+    if (!user) {
+      return res.status(400).send("Username does not exist");
+    }
+
+    const statement2 = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    const userWithPassword = statement2.get(username, password); 
+    if (!userWithPassword) {
+      return res.status(400).send("Invalid Password");
+    }
+    res.status(200).send("Login confirmed");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
   }
-  res.status(200).send("Login confirmed");
 });
+
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
