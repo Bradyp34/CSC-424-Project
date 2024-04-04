@@ -1,14 +1,13 @@
 import React from "react";
 import Navbar from "./Components/Navbar";
-/*import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
-*/
 
 function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <div className='text-white'>Main Page</div>
+      <div className='grid place-items-center h-screen bg-gray-900 text-white'>
+        <h1 className='text-3xl font-bold'>Welcome to the main page!</h1>
+        </div>
     </div>
   );
 }
