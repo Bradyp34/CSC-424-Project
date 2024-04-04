@@ -9,7 +9,6 @@ function App() {
     <div className="App">
       <Navbar></Navbar>
       <div className='text-white'>Main Page</div>
-      <p>printf("Hello World");</p>
     </div>
   );
 }
