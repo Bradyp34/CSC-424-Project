@@ -11,25 +11,22 @@ import AccountPage from './Pages/AccountPage';
 describe('React Component Render Tests', () => {
     test('LoginPage should render without crashing', () => {
         render(<LoginPage />);
-        // Jest uses 'expect' by default, no need for 'chai'
-        // Keeping the placeholder assert
-        expect(true).toBe(true);
-        // Now using Jest's matchers
-        // expect(screen.getByRole('button', { name: /Log In/i })).toBeInTheDocument();
+        // Assert that there is a button that says login on the page
+        expect(screen.getByRole('button', { name: /Login/i })).toBeInTheDocument();
     });
 
     test('ItemSearchPage should render without crashing', () => {
         render(<ItemSearchPage />);
-        expect(true).toBe(true);
+        expect(screen.getByText(/Search/i)).toBeInTheDocument();
     });
 
     test('InventoryPage should render without crashing', () => {
         render(<InventoryPage />);
-        expect(true).toBe(true);
+        expect(screen.getByText(/Inventory/i)).toBeInTheDocument();
     });
 
     test('AccountPage should render without crashing', () => {
         render(<AccountPage />);
-        expect(true).toBe(true);
+        expect(screen.getByText(/Account/i)).toBeInTheDocument();
     });
 });
