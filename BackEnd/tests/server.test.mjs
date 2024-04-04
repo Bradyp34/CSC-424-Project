@@ -258,6 +258,27 @@ it("Should allow registration of a new user by an admin", function (done) {
         done();
       });
   });
+
+  // Test case Admin should be able to add new products
+    it("Should allow the addition of a product", function(done){
+      const expectedMessage = "Product added sucessfully";
+      const newProduct = {
+        product_name: "sampleProduct",
+        product_type: "sampleType",
+        product_location: "sampleLocation",
+        total_product_count: 10
+      }
+      request(app)
+        .post("/addProduct")
+        .send(newProduct)
+        .expect(201)
+        .end(function(err, res){
+          if(err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done();
+        });
+    });
+
   // Close the server after all tests have completed
   after(function () {
     server.close();
