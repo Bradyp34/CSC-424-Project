@@ -130,16 +130,11 @@ app.post("/Login", async (req, res) => {
       return res.status(400).send("Username or Password Missing!");
     }
 
-    const statement = db.prepare("SELECT * FROM users WHERE username = ?");
-    const user = statement.get(username);
-    if (!user) {
-      return res.status(400).send("Username does not exist");
-    }
-
     const statement2 = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?");
     const userWithPassword = statement2.get(username, password); 
+    console.log(userWithPassword);
     if (!userWithPassword) {
-      return res.status(400).send("Invalid Password");
+      return res.status(400).send("Invalid Credentials");
     }
     res.status(200).send("Login confirmed");
   } catch (error) {
