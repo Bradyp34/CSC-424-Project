@@ -122,11 +122,6 @@ app.post("/removeUser", async (req, res) => {
   }
 });
 
-
- app.post("/Login", async (req, res) => {
-  if (req.body.username === undefined || req.body.password === undefined) {
-    res.status(400).send("Hello, world!");
-    
 app.post("/Login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -136,7 +131,6 @@ app.post("/Login", async (req, res) => {
 
     const statement2 = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?");
     const userWithPassword = statement2.get(username, password); 
-    console.log(userWithPassword);
     if (!userWithPassword) {
       return res.status(400).send("Invalid Credentials");
     }
