@@ -2,19 +2,39 @@ import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 
 function ItemSearchPage() {
-  const [searchQuery, setSearchQuery] = useState('');
+ const [searchQuery, setSearchQuery] = useState('');
+ const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchChange = (event) => {
+ // Predefined list of items for demonstration
+ const items = [
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Banana' },
+    { id: 3, name: 'Book' },
+
+ ];
+
+ const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-  };
+    filterItems(event.target.value);
+ };
 
-  const handleSearchSubmit = (event) => {
+ const handleSearchSubmit = (event) => {
     event.preventDefault();
     // Logic for handling search query submission
     console.log('Search query:', searchQuery);
-  };
+ };
 
-  return (
+ // Function to filter items based on the search query
+ const filterItems = (query) => {
+    if (query) {
+      const filtered = items.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+      setSearchResults(filtered);
+    } else {
+      setSearchResults([]);
+    }
+ };
+
+ return (
     <div>
       <Navbar />
       <div className='grid place-items-center h-screen bg-gray-900 text-white'>
@@ -35,11 +55,23 @@ function ItemSearchPage() {
               Search
             </button>
           </form>
-          {/* Additional item search content can be added here */}
+          {/* Display search results */}
+          {searchResults.length > 0 ? (
+            <div>
+              <h3 className='text-2xl font-bold mt-4'>Results:</h3>
+              <ul>
+                {searchResults.map((item) => (
+                 <li key={item.id} className='mb-2'>{item.name}</li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p className='mt-4'>No results found.</p>
+          )}
         </div>
       </div>
     </div>
-  );
+ );
 }
 
 export default ItemSearchPage;
