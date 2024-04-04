@@ -5,6 +5,8 @@ function ItemSearchPage() {
  const [searchQuery, setSearchQuery] = useState('');
  const [searchResults, setSearchResults] = useState([]);
  const [searchPerformed, setSearchPerformed] = useState(false);
+ const [loading, setLoading] = useState(false);
+ 
 
  const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -12,9 +14,8 @@ function ItemSearchPage() {
 
  const handleSearchSubmit = (event) => {
     event.preventDefault();
-    setSearchPerformed(true); // Indicate that a search has been performed
-    // Fetch data from the backend
-    fetchItems(searchQuery);
+    setSearchPerformed(true); 
+    fetchItems(searchQuery).then(() => setSearchQuery(''));
  };
 
  // Function to fetch items from the backend
@@ -25,6 +26,8 @@ function ItemSearchPage() {
       setSearchResults(data.items); // Assuming the API returns an array of items
     } catch (error) {
       console.error('Error fetching items:', error);
+    } finally {
+      setLoading(false);
     }
  };
 
