@@ -18,7 +18,7 @@ describe('React Component Render Tests', () => {
     test('ItemSearchPage should render without crashing', () => {
         render(<ItemSearchPage />);
         // Tests if page loads by searching for "Account Page" text on the page
-        expect(screen.getByText(/Item Search/i)).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /Search/i })).toBeInTheDocument();
     });
 
     test('InventoryPage should render without crashing', () => {
