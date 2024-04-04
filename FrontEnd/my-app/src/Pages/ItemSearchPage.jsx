@@ -4,12 +4,14 @@ import Navbar from '../Components/Navbar';
 function ItemSearchPage() {
  const [searchQuery, setSearchQuery] = useState('');
  const [searchResults, setSearchResults] = useState([]);
+ const [searchPerformed, setSearchPerformed] = useState(false);
 
  // Predefined list of items for demonstration
  const items = [
     { id: 1, name: 'Apple' },
     { id: 2, name: 'Banana' },
     { id: 3, name: 'Book' },
+    { id: 4, name: 'fasdfsadfsadfsadfsadfsadfasdfsadfsadfsadfsadf'}
 
  ];
 
@@ -56,7 +58,9 @@ function ItemSearchPage() {
             </button>
           </form>
           {/* Display search results */}
-          {searchResults.length > 0 ? (
+          {searchResults.length === 0 && searchPerformed ? (
+            <p className='mt-4'>No results found.</p>
+          ) : (
             <div>
               <h3 className='text-2xl font-bold mt-4'>Results:</h3>
               <ul>
@@ -65,13 +69,10 @@ function ItemSearchPage() {
                 ))}
               </ul>
             </div>
-          ) : (
-            <p className='mt-4'>No results found.</p>
           )}
         </div>
       </div>
     </div>
  );
 }
-
 export default ItemSearchPage;
