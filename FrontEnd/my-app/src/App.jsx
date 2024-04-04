@@ -1,14 +1,16 @@
-import React from "react";
-import Navbar from "./Components/Navbar";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './Pages/LoginPage';
+import LoginSuccess from './Pages/LoginSuccess';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar></Navbar>
-      <div className='grid place-items-center h-screen bg-gray-900 text-white'>
-        <h1 className='text-3xl font-bold'>Welcome to the main page!</h1>
-        </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/Login" element={<LoginPage />} />
+        <Route path="/LoginSuccess" element={<LoginSuccess />} />
+      </Routes>
+    </Router>
   );
 }
 
