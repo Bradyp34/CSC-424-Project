@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite = require("better-sqlite3");
 const cors = require("cors");
+const cors = require("cors");
 const path = require("path");
 const {
   errorHandlerMiddleware,
@@ -24,18 +25,21 @@ db.exec(file_date);
 
 const product_db = sqlite("product_database.db");
 const product_file_data = fs.readFileSync(
+ 
   path.resolve(__dirname, "product_schema.sql"),
+ 
   "utf-8"
+
 );
 product_db.exec(product_file_data);
 
-const log = `Server live on port ${PORT}. At ${current_time}\n`;
+const log = "Server live on port ${PORT}. At ${current_time}\n";
 fs.appendFile(activity_log_file, log, (error) => {
   if (error) {
     console.log(err);
     process.exit(0);
   } else {
-    // console.log("successfully logged")
+    // // console.log("successfully logged")
   }
 });
 
@@ -47,14 +51,19 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.get("/", (req, res) => {
-  const log = `Server live on port ${PORT}. At ${current_time}\n`;
+  const log =" Server live on port ${PORT}. At ${current_time}\n";
   fs.appendFile(activity_log_file, log, (err) => {
     if (err) {
-      console.log(err);
+      console.log(err);;
     } else {
-      // console.log("successfully logged");
+      // // console.log("successfully logged");
     }
   });
   res.status(200).send("Server now running");
@@ -77,7 +86,7 @@ app.post("/Register", async (req, res) => {
     return;
   }
 
-  if (username === "" || email === "" || password === "" || user_type === "") {
+  if (username === ""||  email === ""||  password === "" || user_type === "") {
     res.status(400).send("Empty fields");
     return;
   }
@@ -120,7 +129,9 @@ app.post("/removeUser", async (req, res) => {
     }
 
     const statement = db.prepare(
+      
       "DELETE FROM users WHERE username = ? AND email = ?"
+    
     );
     statement.run(username, email);
 
