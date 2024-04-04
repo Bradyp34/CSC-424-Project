@@ -15,11 +15,11 @@ function AccountPage() {
  };
 
  return (
-    <div className="min-h-screen bg-gray-800 text-white">
+    <div className="flex flex-col min-h-screen bg-gray-800 text-white">
       <Navbar />
-      <div className="container mx-auto p-4">
+      <div className="flex-grow flex flex-col justify-center items-center">
         <div className="text-center text-2xl font-bold mb-4">Account Page</div>
-        <div className="info bg-gray-700 p-4 rounded-lg mb-4">
+        <div className="info bg-gray-700 p-4 rounded-lg mb-4 w-full max-w-md">
           <div className="profile">Profile</div>
           <div className="name font-semibold">Name: {user.name}</div>
           <div className="email font-semibold">Email: {user.email}</div>
