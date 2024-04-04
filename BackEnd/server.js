@@ -146,34 +146,22 @@ app.post("/Login", async (req, res) => {
 });
 
 app.get("/searchItems", async (req, res) => {
-  const {item} = req.body
+  const { item } = req.query; // Get the search query from the URL query string
 
-  // const query = req.query.search; // Get the search query from the request
- 
   if (item === undefined || item === "") {
-     return res.status(400).send("Missing search query parameter");
+    return res.status(400).send("Missing search query parameter");
   }
- 
-  try {
-     // Logic to search your database for items that match the query
-     const statement = product_db.prepare("SELECT * FROM products WHERE product_name = ?");
-      const response = statement.get(item)
-     res.status(200).send(response);
-  } catch (error) {
-     console.error("Error searching items:", error);
-     res.status(500).send("Internal server error");
-  }
- });
 
-//  async function searchItemsInDatabase(query) {
-//   // Prepare a SQL statement to search for products by name
-//   const statement = product_db.prepare("SELECT * FROM products WHERE product_name = ?");
-//   // Execute the statement with the search query, using the LIKE operator for a simple search
-//   const items = statement.get(`%${query}%`);
-//   return items;
-//  }
- 
- 
+  try {
+    const statement = product_db.prepare("SELECT * FROM products WHERE product_name = ?");
+    const response = statement.get(item);
+    res.status(200).send(response);
+  } catch (error) {
+    console.error("Error searching items:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+  
 
 app.post("/addProduct", async(req, res)=>{
 try{
