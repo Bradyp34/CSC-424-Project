@@ -1,15 +1,16 @@
-import React from "react";
-import Navbar from "./Components/Navbar";
-/*import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
-*/
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './Pages/LoginPage';
+import LoginSuccess from './Pages/LoginSuccess';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar></Navbar>
-      <div className='text-white'>Main Page</div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/Login" element={<LoginPage />} />
+        <Route path="/LoginSuccess" element={<LoginSuccess />} />
+      </Routes>
+    </Router>
   );
 }
 
