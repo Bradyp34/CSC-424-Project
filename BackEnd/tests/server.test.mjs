@@ -53,7 +53,7 @@ describe("Server API Test Suite", function () {
     });
 
   // Test case: Check for login with an non existing username
-  it("Should return an error message", function(done){
+  it("Should return an error message for trying to log in with a new username", function(done){
     const expectedMessage = "Invalid Credentials";
     const data = {
       username: "NewUsername",
@@ -71,7 +71,7 @@ describe("Server API Test Suite", function () {
   });
 
   //Test case: Check for missing username while trying to log in
-  it("Should return an error message", function(done){
+  it("Should return an error message for trying to login with missing username", function(done){
     const expectedMessage = "Username or Password Missing!";
     const data = {
       password: "pass"
@@ -88,7 +88,7 @@ describe("Server API Test Suite", function () {
   });
 
   //Test case: Check for missing password while trying to log in
-  it("Should return an error message", function(done){
+  it("Should return an error message for trying to login in missing password", function(done){
     const expectedMessage = "Username or Password Missing!";
     const data = {
       username: "user"
@@ -224,7 +224,7 @@ it("Should allow registration of a new user by an admin", function (done) {
   });
 
   // Test case: Check for login with a wrong password for an existing user
-  it("Should return an error message", function(done){
+  it("Should return an error message for trying to log in with wrong password", function(done){
     const expectedMessage = "Invalid Credentials";
     const test_data = {
       username: "newuser2",
