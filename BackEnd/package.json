@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "chai-http": "^4.4.0",
+    "concurrently": "^8.2.2",
     "supertest": "^6.3.4"
   },
   "scripts": {
