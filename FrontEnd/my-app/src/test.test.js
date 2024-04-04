@@ -17,16 +17,19 @@ describe('React Component Render Tests', () => {
 
     test('ItemSearchPage should render without crashing', () => {
         render(<ItemSearchPage />);
+        // Tests if page loads by searching for "Account Page" text on the page
         expect(screen.getByText(/Item Search Page/i)).toBeInTheDocument();
     });
 
     test('InventoryPage should render without crashing', () => {
         render(<InventoryPage />);
+        // Tests if page loads by searching for "Account Page" text on the page
         expect(screen.getByText(/Inventory Page/i)).toBeInTheDocument();
     });
 
     test('AccountPage should render without crashing', () => {
         render(<AccountPage />);
+        // Tests if page loads by searching for "Account Page" text on the page
         expect(screen.getByText(/Account Page/i)).toBeInTheDocument();
     });
 });
