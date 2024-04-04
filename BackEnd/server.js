@@ -123,6 +123,10 @@ app.post("/removeUser", async (req, res) => {
 });
 
 
+ app.post("/Login", async (req, res) => {
+  if (req.body.username === undefined || req.body.password === undefined) {
+    res.status(400).send("Hello, world!");
+    
 app.post("/Login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -162,7 +166,7 @@ catch(error){
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
-});
+}); 
 
 module.exports = { app, server };
 
