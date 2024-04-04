@@ -1,7 +1,6 @@
 const express = require("express");
 const sqlite = require("better-sqlite3");
 const cors = require("cors");
-const cors = require("cors");
 const path = require("path");
 const {
   errorHandlerMiddleware,

@@ -15,9 +15,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "npx concurrently \"react-scripts start\" \"../../Backend/make\"",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "npx concurrently \"react-scripts test\" \"npm --prefix ../../Backend test\"",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
