@@ -6,6 +6,7 @@ function ItemSearchPage() {
  const [searchResults, setSearchResults] = useState([]);
  const [searchPerformed, setSearchPerformed] = useState(false);
  const [loading, setLoading] = useState(false);
+ const [error, setError] = useState(null);
  
 
  const handleSearchChange = (event) => {
@@ -22,15 +23,22 @@ function ItemSearchPage() {
 const fetchItems = async (query) => {
   setLoading(true); // Start loading
   try {
-      const response = await fetch(`https://your-api-endpoint.com/items?search=${query}`);
-      const data = await response.json();
-      setSearchResults(data.items); 
+     const response = await fetch(`http://localhost:8080/searchItems`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ item: query }),
+     });
+     const data = await response.json();
+     setSearchResults(data); // Assuming the API returns an array of items
   } catch (error) {
-      console.error('Error fetching items:', error);
+     console.error('Error fetching items:', error);
+     setError('Error fetching items. Please try again later.');
   } finally {
-      setLoading(false); 
+     setLoading(false); // Stop loading when done
   }
-};
+ };
 
 
  return (
@@ -54,6 +62,7 @@ const fetchItems = async (query) => {
               Search
             </button>
           </form>
+          {error && <p className='mt-4 text-red-500'>{error}</p>}
           {/* Display search results */}
           {searchResults.length === 0 && searchPerformed ? (
             <p className='mt-4'>No results found.</p>
