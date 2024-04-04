@@ -44,7 +44,7 @@ describe("Server API Test Suite", function () {
       request(app)
         .post("/Register")
         .send(incompleteUser)
-        .expect(400) // 425 Bad Request status code for empty data
+        .expect(400)
         .end(function (err, res) {
           if (err) return done(err);
           assert.strictEqual(res.text, expectedMessage);
@@ -52,23 +52,58 @@ describe("Server API Test Suite", function () {
         });
     });
 
-  // Test case: Check for valid login
-  it("Should return a greeting message", function (done) {
-    const expectedGreeting = "Login confirmed";
+  // Test case: Check for login with an non existing username
+  it("Should return an error message for trying to log in with a new username", function(done){
+    const expectedMessage = "Invalid Credentials";
     const data = {
-      username: "ismail",
-      password: "hi",
+      username: "NewUsername",
+      password: "pass"
     };
     request(app)
       .post("/Login")
       .send(data)
-      .expect(200)
-      .end(function (err, res) {
-        if (err) return done(err);
-        assert.strictEqual(res.text, expectedGreeting);
-        done();
+      .expect(400)
+      .end(function(err, res){
+        if(err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done();
       });
   });
+
+  //Test case: Check for missing username while trying to log in
+  it("Should return an error message for trying to login with missing username", function(done){
+    const expectedMessage = "Username or Password Missing!";
+    const data = {
+      password: "pass"
+    };
+    request(app)
+     .post("/Login")
+     .send(data)
+     .expect(400)
+     .end(function(err, res){
+        if(err) return done(err);
+        assert.strictEqual(res.text, expectedMessage);
+        done();
+     });
+  });
+
+  //Test case: Check for missing password while trying to log in
+  it("Should return an error message for trying to login in missing password", function(done){
+    const expectedMessage = "Username or Password Missing!";
+    const data = {
+      username: "user"
+    };
+    request(app)
+     .post("/Login")
+     .send(data)
+     .expect(400)
+     .end(function(err, res){
+        if(err) return done(err);
+        assert.strictEqual(res.text, expectedMessage);
+        done();
+     });
+  });
+
 
   // Test case: Check if 404 is returned for invalid endpoint
   it("Should return 404 for invalid endpoint", function (done) {
@@ -170,23 +205,80 @@ it("Should allow registration of a new user by an admin", function (done) {
         done();
       });
   });
+   // Test case: Check for valid login
+   it("Should return a greeting message", function (done) {
+    const expectedGreeting = "Login confirmed";
+    const data = {
+      username: "newuser2",
+      password: "newpassword2"
+    };
+    request(app)
+      .post("/Login")
+      .send(data)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) return done(err);
+        assert.strictEqual(res.text, expectedGreeting);
+        done();
+      });
+  });
+
+  // Test case: Check for login with a wrong password for an existing user
+  it("Should return an error message for trying to log in with wrong password", function(done){
+    const expectedMessage = "Invalid Credentials";
+    const test_data = {
+      username: "newuser2",
+      password: "wrong_pass"
+    };
+    request(app)
+      .post("/Login")
+      .send(test_data)
+      .expect(400)
+      .end(function(err, res){
+        if(err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done();
+      });
+  });
+
   // Test case: Admin can remove a user(For now it is just able to remove user)
   it("Should allow the removal of a user", function(done){
     const expectedMessage = "User Removed";
     const userToBeRemoved = {
-      username: "existingUser",
-      email: "existingUser@example.com"
+      username: "newuser2",
+      email: "newuser2@example.com",
     };
     request(app)
-      .post("/RemoveUser")
+      .post("/removeUser")
       .send(userToBeRemoved)
-      .expect(201) // User Removal is sucessful 
+      .expect(200) // User Removal is sucessful 
       .end(function(err, res){
         if(err) return done(err);
         assert.strictEqual(res.text, expectedMessage);
         done();
       });
   });
+
+  // Test case Admin should be able to add new products
+    it("Should allow the addition of a product", function(done){
+      const expectedMessage = "Product added sucessfully";
+      const newProduct = {
+        product_name: "sampleProduct",
+        product_type: "sampleType",
+        product_location: "sampleLocation",
+        total_product_count: 10
+      }
+      request(app)
+        .post("/addProduct")
+        .send(newProduct)
+        .expect(201)
+        .end(function(err, res){
+          if(err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done();
+        });
+    });
+
   // Close the server after all tests have completed
   after(function () {
     server.close();

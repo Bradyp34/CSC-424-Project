@@ -21,6 +21,10 @@ const file_date = fs.readFileSync(
 );
 db.exec(file_date);
 
+const product_db = sqlite("product_database.db");
+const product_file_data = fs.readFileSync( path.resolve(__dirname, "product_schema.sql"), "utf-8");
+product_db.exec(product_file_data);
+
 const log = `Server live on port ${PORT}. At ${current_time}\n`;
 fs.appendFile(activity_log_file, log, (error) => {
   if (error) {
@@ -98,12 +102,66 @@ app.post("/Register", async (req, res) => {
     }
 
 });
+app.post("/removeUser", async (req, res) => {
+  try {
+    const { username, email } = req.body;
+    if (!username || !email) {
+      return res.status(400).send("Missing fields / parameters");
+    }
+
+    const statement = db.prepare("DELETE FROM users WHERE username = ? AND email = ?");
+    statement.run(username, email);
+
+    if (statement.changes === 0) {
+      return res.status(404).send("User not found");
+    }
+    return res.status(200).send("User Removed");
+  } catch (error) {
+    console.log( error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 
  app.post("/Login", async (req, res) => {
   if (req.body.username === undefined || req.body.password === undefined) {
     res.status(400).send("Hello, world!");
+    
+app.post("/Login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).send("Username or Password Missing!");
+    }
+
+    const statement2 = db.prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    const userWithPassword = statement2.get(username, password); 
+    console.log(userWithPassword);
+    if (!userWithPassword) {
+      return res.status(400).send("Invalid Credentials");
+    }
+    res.status(200).send("Login confirmed");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server error");
   }
-  res.status(200).send("Login confirmed");
+});
+
+app.post("/addProduct", async(req, res)=>{
+try{
+  const {product_name, product_type, product_location, total_product_count} = req.body;
+  if(!product_name || !product_type || !product_location || !total_product_count){
+    return res.status(400).send("Missing Parameters");
+  }
+  const statement = product_db.prepare("insert into products(product_name, product_type, product_location, total_product_count) values(?, ?, ?, ?)");
+  statement.run(product_name, product_type, product_location, total_product_count);
+  return res.status(201).send("Product added sucessfully");
+}
+catch(error){
+    console.error(error);
+    res.status(500).send("Internal server error");
+}
+
 });
 
 const server = app.listen(PORT, () => {

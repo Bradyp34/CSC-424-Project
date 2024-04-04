@@ -11,7 +11,7 @@ CREATE TABLE products (
         product_status IN ('available', 'sold', 'on-hold')
     ),
     -- Allow only specific values
-    product_sale_count INTEGER NOT NULL CHECK (product_sale_count >= 0),
+    product_sale_count INTEGER NOT NULL DEFAULT 0 CHECK (product_sale_count >= 0),
     -- Ensure sale count is non-negative
-    product_on_hold_count INTEGER NOT NULL CHECK (product_on_hold_count >= 0) -- Ensure on hold count is non-negative
+    product_on_hold_count INTEGER NOT NULL DEFAULT 0 CHECK (product_on_hold_count >= 0) -- Ensure on hold count is non-negative
 );
