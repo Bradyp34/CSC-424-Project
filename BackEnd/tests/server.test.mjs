@@ -44,7 +44,7 @@ describe("Server API Test Suite", function () {
       request(app)
         .post("/Register")
         .send(incompleteUser)
-        .expect(400) // 425 Bad Request status code for empty data
+        .expect(400)
         .end(function (err, res) {
           if (err) return done(err);
           assert.strictEqual(res.text, expectedMessage);
@@ -52,21 +52,21 @@ describe("Server API Test Suite", function () {
         });
     });
 
-  // Test case: Check for valid login
-  it("Should return a greeting message", function (done) {
-    const expectedGreeting = "Login confirmed";
+  // Test case: Check for login with an non existing username
+  it("Should return an error message", function(done){
+    const expectedMessage = "Username does not exist";
     const data = {
-      username: "ismail",
+      username: "NewUsername",
       password: "pass"
     };
     request(app)
       .post("/Login")
       .send(data)
-      .expect(200)
-      .end(function (err, res) {
-        if (err) return done(err);
-        assert.strictEqual(res.text, expectedGreeting);
-        done();
+      .expect(400)
+      .end(function(err, res){
+        if(err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done();
       });
   });
 
@@ -205,6 +205,42 @@ it("Should allow registration of a new user by an admin", function (done) {
         done();
       });
   });
+   // Test case: Check for valid login
+   it("Should return a greeting message", function (done) {
+    const expectedGreeting = "Login confirmed";
+    const data = {
+      username: "newuser2",
+      password: "newpassword2"
+    };
+    request(app)
+      .post("/Login")
+      .send(data)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) return done(err);
+        assert.strictEqual(res.text, expectedGreeting);
+        done();
+      });
+  });
+
+  // Test case: Check for login with a wrong password for an existing user
+  it("Should return an error message", function(done){
+    const expectedMessage = "Invalid Password";
+    const test_data = {
+      username: "newuser2",
+      password: "wrong_pass"
+    };
+    request(app)
+      .post("/Login")
+      .send(test_data)
+      .expect(400)
+      .end(function(err, res){
+        if(err) return done(err);
+          assert.strictEqual(res.text, expectedMessage);
+          done();
+      });
+  });
+
   // Test case: Admin can remove a user(For now it is just able to remove user)
   it("Should allow the removal of a user", function(done){
     const expectedMessage = "User Removed";
