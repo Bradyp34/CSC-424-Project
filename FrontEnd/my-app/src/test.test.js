@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 // Import components. Adjust the paths according to your project structure.
-import LoginPage from './pages/LoginPage';
-import ItemSearchPage from './pages/ItemSearchPage';
-import InventoryPage from './pages/InventoryPage';
-import AccountPage from './pages/AccountPage';
+import LoginPage from './Pages/LoginPage';
+import ItemSearchPage from './Pages/ItemSearchPage';
+import InventoryPage from './Pages/InventoryPage';
+import AccountPage from './Pages/AccountPage';
 
 describe('React Component Render Tests', () => {
     test('LoginPage should render without crashing', () => {
