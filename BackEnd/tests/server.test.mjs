@@ -54,7 +54,7 @@ describe("Server API Test Suite", function () {
 
   // Test case: Check for login with an non existing username
   it("Should return an error message", function(done){
-    const expectedMessage = "Username does not exist";
+    const expectedMessage = "Invalid Credentials";
     const data = {
       username: "NewUsername",
       password: "pass"
@@ -225,7 +225,7 @@ it("Should allow registration of a new user by an admin", function (done) {
 
   // Test case: Check for login with a wrong password for an existing user
   it("Should return an error message", function(done){
-    const expectedMessage = "Invalid Password";
+    const expectedMessage = "Invalid Credentials";
     const test_data = {
       username: "newuser2",
       password: "wrong_pass"
