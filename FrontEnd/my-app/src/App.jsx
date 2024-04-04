@@ -2,15 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './Pages/LoginPage';
 import LoginSuccess from './Pages/LoginSuccess';
+import Navbar from './Components/Navbar';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/Login" element={<LoginPage />} />
-        <Route path="/LoginSuccess" element={<LoginSuccess />} />
-      </Routes>
-    </Router>
+   <div>
+    <Navbar/>
+   </div>
   );
 }
 
