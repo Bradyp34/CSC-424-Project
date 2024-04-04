@@ -1,5 +1,6 @@
 const express = require("express");
 const sqlite = require("better-sqlite3");
+const cors = require("cors");
 const path = require("path");
 const {
   errorHandlerMiddleware,
@@ -10,7 +11,7 @@ const app = express();
 const fs = require("fs");
 const { debugPort } = require("process");
 const { use } = import("chai");
-const PORT = 3000;
+const PORT = 8080;
 const activity_log_file = "log.txt";
 const current_time = new Date();
 
@@ -38,6 +39,9 @@ fs.appendFile(activity_log_file, log, (error) => {
 app.use(express.json());
 app.use(errorHandlerMiddleware);
 app.use(loggingMiddleware);
+app.use(cors({
+  origin: "http://localhost:3000",
+}));
 
 app.get("/", (req, res) => {
   const log = `Server live on port ${PORT}. At ${current_time}\n`;
@@ -140,6 +144,36 @@ app.post("/Login", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+
+app.get("/searchItems", async (req, res) => {
+  const {item} = req.body
+
+  // const query = req.query.search; // Get the search query from the request
+ 
+  if (item === undefined || item === "") {
+     return res.status(400).send("Missing search query parameter");
+  }
+ 
+  try {
+     // Logic to search your database for items that match the query
+     const statement = product_db.prepare("SELECT * FROM products WHERE product_name = ?");
+      const response = statement.get(item)
+     res.status(200).send(response);
+  } catch (error) {
+     console.error("Error searching items:", error);
+     res.status(500).send("Internal server error");
+  }
+ });
+
+//  async function searchItemsInDatabase(query) {
+//   // Prepare a SQL statement to search for products by name
+//   const statement = product_db.prepare("SELECT * FROM products WHERE product_name = ?");
+//   // Execute the statement with the search query, using the LIKE operator for a simple search
+//   const items = statement.get(`%${query}%`);
+//   return items;
+//  }
+ 
+ 
 
 app.post("/addProduct", async(req, res)=>{
 try{
