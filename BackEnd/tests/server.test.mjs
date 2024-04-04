@@ -57,7 +57,7 @@ describe("Server API Test Suite", function () {
     const expectedGreeting = "Login confirmed";
     const data = {
       username: "ismail",
-      password: "hi",
+      password: "pass"
     };
     request(app)
       .post("/Login")
@@ -69,6 +69,41 @@ describe("Server API Test Suite", function () {
         done();
       });
   });
+
+  //Test case: Check for missing username while trying to log in
+  it("Should return an error message", function(done){
+    const expectedMessage = "Username or Password Missing!";
+    const data = {
+      password: "pass"
+    };
+    request(app)
+     .post("/Login")
+     .send(data)
+     .expect(400)
+     .end(function(err, res){
+        if(err) return done(err);
+        assert.strictEqual(res.text, expectedMessage);
+        done();
+     });
+  });
+
+  //Test case: Check for missing password while trying to log in
+  it("Should return an error message", function(done){
+    const expectedMessage = "Username or Password Missing!";
+    const data = {
+      username: "user"
+    };
+    request(app)
+     .post("/Login")
+     .send(data)
+     .expect(400)
+     .end(function(err, res){
+        if(err) return done(err);
+        assert.strictEqual(res.text, expectedMessage);
+        done();
+     });
+  });
+
 
   // Test case: Check if 404 is returned for invalid endpoint
   it("Should return 404 for invalid endpoint", function (done) {
@@ -174,13 +209,13 @@ it("Should allow registration of a new user by an admin", function (done) {
   it("Should allow the removal of a user", function(done){
     const expectedMessage = "User Removed";
     const userToBeRemoved = {
-      username: "existingUser",
-      email: "existingUser@example.com"
+      username: "newuser2",
+      email: "newuser2@example.com",
     };
     request(app)
-      .post("/RemoveUser")
+      .post("/removeUser")
       .send(userToBeRemoved)
-      .expect(201) // User Removal is sucessful 
+      .expect(200) // User Removal is sucessful 
       .end(function(err, res){
         if(err) return done(err);
         assert.strictEqual(res.text, expectedMessage);
