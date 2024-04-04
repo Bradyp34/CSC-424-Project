@@ -1,7 +1,6 @@
 const express = require("express");
 const sqlite = require("better-sqlite3");
 const cors = require("cors");
-const cors = require("cors");
 const path = require("path");
 const {
   errorHandlerMiddleware,
@@ -46,11 +45,6 @@ fs.appendFile(activity_log_file, log, (error) => {
 app.use(express.json());
 app.use(errorHandlerMiddleware);
 app.use(loggingMiddleware);
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
 app.use(
   cors({
     origin: "http://localhost:3000",
