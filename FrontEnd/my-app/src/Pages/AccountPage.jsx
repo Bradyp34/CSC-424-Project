@@ -6,7 +6,7 @@ function AccountPage() {
     name: 'John Doe',
     email: 'john.doe@example.com',
     username: 'johndoe',
-    password: 'password123', // Example password for demonstration
+    password: 'password123', 
  });
 
  // Function to generate a string of asterisks based on the password length
