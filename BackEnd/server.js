@@ -98,10 +98,30 @@ app.post("/Register", async (req, res) => {
     }
 
 });
+app.post("/removeUser", async (req, res) => {
+  try {
+    const { username, email } = req.body;
+    if (!username || !email) {
+      return res.status(400).send("Missing fields / parameters");
+    }
+
+    const statement = db.prepare("DELETE FROM users WHERE username = ? AND email = ?");
+    statement.run(username, email);
+
+    if (statement.changes === 0) {
+      return res.status(404).send("User not found");
+    }
+    return res.status(200).send("User Removed");
+  } catch (error) {
+    console.log( error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 
 app.post("/Login", async (req, res) => {
   if (req.body.username === undefined || req.body.password === undefined) {
-    res.status(400).send("Hello, world!");
+    res.status(400).send("Username or Password Missing!");
   }
   res.status(200).send("Login confirmed");
 });
