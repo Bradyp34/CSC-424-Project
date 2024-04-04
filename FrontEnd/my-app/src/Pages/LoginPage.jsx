@@ -4,11 +4,13 @@ import Navbar from "../Components/Navbar";
 import LoginSuccess from "./LoginSuccess"; // Import your DashboardPage component
 
 function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false);
+ const [showPassword, setShowPassword] = useState(false);
+ const [username, setUsername] = useState('');
+ const [password, setPassword] = useState('');
 
-  const togglePasswordVisibility = () => {
+ const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
+ };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -95,7 +97,7 @@ function LoginPage() {
         </div>
       </div>
     </div>
-  );
+ );
 }
 
 export default LoginPage;
