@@ -17,16 +17,16 @@ describe('React Component Render Tests', () => {
 
     test('ItemSearchPage should render without crashing', () => {
         render(<ItemSearchPage />);
-        expect(screen.getByText(/Search/i)).toBeInTheDocument();
+        expect(screen.getByText(/Item Search Page/i)).toBeInTheDocument();
     });
 
     test('InventoryPage should render without crashing', () => {
         render(<InventoryPage />);
-        expect(screen.getByText(/Inventory/i)).toBeInTheDocument();
+        expect(screen.getByText(/Inventory Page/i)).toBeInTheDocument();
     });
 
     test('AccountPage should render without crashing', () => {
         render(<AccountPage />);
-        expect(screen.getByText(/Account/i)).toBeInTheDocument();
+        expect(screen.getByText(/Account Page/i)).toBeInTheDocument();
     });
 });
