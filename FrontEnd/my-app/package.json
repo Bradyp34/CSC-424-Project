@@ -15,7 +15,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start && ../../Backup/make",
+    "start": "npx concurrently \"react-scripts start\" \"sh -c 'cd ../../Backend && make'\"",
     "build": "react-scripts build",
     "test": "react-scripts test && ../../Backup/npm test",
     "eject": "react-scripts eject"
