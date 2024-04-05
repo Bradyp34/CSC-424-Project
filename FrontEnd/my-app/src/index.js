@@ -7,6 +7,7 @@ import ItemSearchPage from './Pages/ItemSearchPage';
 import InventoryPage from './Pages/InventoryPage';
 import AccountPage from './Pages/AccountPage';
 import LoginSuccess from './Pages/LoginSuccess';
+import AccountCreation from './Pages/AccountCreation';
 
 import {
   createBrowserRouter,
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path:"LoginSuccess",
     element: <LoginSuccess/>
+  },
+  {
+    path:"AccountCreation",
+    element: <AccountCreation/>
   }
 ])
 

@@ -47,6 +47,7 @@ const Navbar = () => {
         <li className='p-4 border-b border-gray-600'><a href='/Inventory'>Item Search</a></li>
         <li className='p-4 border-b border-gray-600'><a href='/ItemSearch'>Inventory</a></li>
         <li className='p-4 border-b border-gray-600'><a href='/Account'>Account</a></li>
+        <li className='p-4 border-b border-gray-600'><a href='/AccountCreation'>AccountCreation</a></li>
         </ul>
       </div>
       
