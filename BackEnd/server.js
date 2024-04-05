@@ -216,4 +216,9 @@ const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
 }); 
 
+app.get("/allProducts", async (req, res) => {
+  const statement = db.prepare("select * from products").all();
+  res.status(200).send(statement);
+});
+
 module.exports = { app, server };
