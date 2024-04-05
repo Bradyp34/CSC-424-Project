@@ -20,7 +20,7 @@ const file_date = fs.readFileSync(
   path.resolve(__dirname, "user_schema.sql"),
   "utf-8"
 );
-//db.exec(file_date);
+db.exec(file_date);
 
 const product_db = sqlite("product_database.db");
 const product_file_data = fs.readFileSync(
@@ -30,7 +30,7 @@ const product_file_data = fs.readFileSync(
   "utf-8"
 
 );
-// product_db.exec(product_file_data);
+product_db.exec(product_file_data);
 
 const log = "Server live on port ${PORT}. At ${current_time}\n";
 fs.appendFile(activity_log_file, log, (error) => {
