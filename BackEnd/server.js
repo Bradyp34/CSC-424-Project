@@ -20,7 +20,7 @@ const file_date = fs.readFileSync(
   path.resolve(__dirname, "user_schema.sql"),
   "utf-8"
 );
-//db.exec(file_date);
+db.exec(file_date);
 
 const product_db = sqlite("product_database.db");
 const product_file_data = fs.readFileSync(
@@ -30,7 +30,7 @@ const product_file_data = fs.readFileSync(
   "utf-8"
 
 );
-// product_db.exec(product_file_data);
+product_db.exec(product_file_data);
 
 const log = "Server live on port ${PORT}. At ${current_time}\n";
 fs.appendFile(activity_log_file, log, (error) => {
@@ -115,6 +115,26 @@ app.post("/Register", async (req, res) => {
     return res.status(500).send("Internal server error");
   }
 });
+// app.post("/updateUser", (req, res) => {
+//   try {
+//     const { username, email, newPassword } = req.body;
+//     if (!username || !email || !newPassword) {
+//       return res.status(400).send("Missing fields / parameters");
+//     }
+
+//     const user = db.prepare("SELECT * FROM users WHERE username = ? AND email = ?").get(username, email);
+//     if (!user) {
+//       return res.status(404).send("User not found");
+//     }
+//     db.prepare("UPDATE users SET password = ? WHERE username = ? AND email = ?").run(newPassword, username, email);
+
+//     return res.status(200).send("User updated successfully");
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).send("Internal server error");
+//   }
+// });
+
 app.post("/removeUser", async (req, res) => {
   try {
     const { username, email } = req.body;
