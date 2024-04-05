@@ -261,7 +261,7 @@ it("Should allow registration of a new user by an admin", function (done) {
 
   // Test case Admin should be able to add new products
     it("Should allow the addition of a product", function(done){
-      const expectedMessage = "Product added sucessfully";
+      const expectedMessage = "Product added successfully";
       const newProduct = {
         product_name: "sampleProduct",
         product_type: "sampleType",
