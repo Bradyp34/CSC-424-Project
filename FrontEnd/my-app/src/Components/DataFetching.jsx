@@ -3,24 +3,36 @@ import axios from 'axios';
 
 function DataFetching() {
 
-const [data, setData] = useState([])
+  const [data, setData] = useState({
+    product_name: '',
+    product_type: '',
+    product_location: '',
+    total_product_count: ''
+  });
 
-useEffect(() => {
-    axios.get('')
-    .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      })
-})
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/addProduct', data)
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div>
-      <ul>
-        {data.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
+      <form>
+        <input type="text" name="product_name" placeholder="Product Name" value={data.product_name} onChange={handleChange} required />
+        <input type="text" name="product_type" placeholder="Product Type" value={data.product_type} onChange={handleChange} required />
+        <input type="text" name="product_location" placeholder="Product Location" value={data.product_location} onChange={handleChange} required />
+        <input type="number" name="total_product_count" placeholder="Total Product Count" value={data.total_product_count} onChange={handleChange} required />
+        <button type="submit" onClick={e => handleChange(e)}>Add Product</button>
+      </form>
     </div>
   )
 }
