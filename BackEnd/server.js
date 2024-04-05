@@ -163,22 +163,32 @@ app.get("/searchItems", async (req, res) => {
 });
   
 
-app.post("/addProduct", async(req, res)=>{
-try{
-  const {product_name, product_type, product_location, total_product_count} = req.body;
-  if(!product_name || !product_type || !product_location || !total_product_count){
-    return res.status(400).send("Missing Parameters");
-  }
-  const statement = product_db.prepare("insert into products(product_name, product_type, product_location, total_product_count) values(?, ?, ?, ?)");
-  statement.run(product_name, product_type, product_location, total_product_count);
-  return res.status(201).send("Product added sucessfully");
-}
-catch(error){
-    console.error(error);
-    res.status(500).send("Internal server error");
-}
+app.post("/addProduct", async (req, res) => {
+  try {
+    const { product_name, product_type, product_location, total_product_count } = req.body;
 
+    if (!product_name || !product_type || !product_location || !total_product_count) {
+      return res.status(400).send("Missing Parameters");
+    }
+
+    const existingProduct = product_db.prepare("SELECT total_product_count FROM products WHERE product_name = ?").get(product_name);
+
+    if (existingProduct) {
+      const updatedCount = existingProduct.total_product_count + total_product_count;
+      product_db.prepare("UPDATE products SET total_product_count = ? WHERE product_name = ?").run(updatedCount, product_name);
+      return res.status(201).send("Product count updated successfully");
+    } else {
+      product_db.prepare("INSERT INTO products (product_name, product_type, product_location, total_product_count) VALUES (?, ?, ?, ?)").run(product_name, product_type, product_location, total_product_count);
+      return res.status(201).send("Product added successfully");
+    }
+
+   
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal server error");
+  }
 });
+
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
