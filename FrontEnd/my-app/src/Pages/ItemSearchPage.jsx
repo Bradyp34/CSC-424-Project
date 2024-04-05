@@ -3,9 +3,10 @@ import Navbar from '../Components/Navbar';
 
 function ItemSearchPage() {
  const [searchQuery, setSearchQuery] = useState('');
- const [searchResults, setSearchResults] = useState([]);
+ const [searchResults, setSearchResults] = useState({});
  const [searchPerformed, setSearchPerformed] = useState(false);
  const [loading, setLoading] = useState(false);
+ const [error, setError] = useState(null);
  
 
  const handleSearchChange = (event) => {
@@ -22,15 +23,22 @@ function ItemSearchPage() {
 const fetchItems = async (query) => {
   setLoading(true); // Start loading
   try {
-      const response = await fetch(`https://your-api-endpoint.com/items?search=${query}`);
-      const data = await response.json();
-      setSearchResults(data.items); 
+     const response = await fetch(`http://localhost:8080/searchItems/${query}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+     });
+     const data = await response.json();
+     setSearchResults(data); // The api returns an object of the response
+     console.log(searchResults)
   } catch (error) {
-      console.error('Error fetching items:', error);
+     console.error('Error fetching items:', error);
+     setError('Error fetching items. Please try again later.');
   } finally {
-      setLoading(false); 
+     setLoading(false); // Stop loading when done
   }
-};
+ };
 
 
  return (
@@ -54,17 +62,32 @@ const fetchItems = async (query) => {
               Search
             </button>
           </form>
+          {error && <p className='mt-4 text-red-500'>{error}</p>}
           {/* Display search results */}
-          {searchResults.length === 0 && searchPerformed ? (
+          {searchResults.length === {} && searchPerformed ? (
             <p className='mt-4'>No results found.</p>
           ) : (
             <div>
               <h3 className='text-2xl font-bold mt-4'>Results:</h3>
               <ul>
-                {searchResults.map((item) => (
+                {/* {searchResults.map((item) => (
                  <li key={item.id} className='mb-2'>{item.name}</li>
-                ))}
+                ))} */}
               </ul>
+                <li>
+                  {searchResults.product_name}
+                </li>
+                <li>
+                  {searchResults.product_type}
+                </li>
+                <li>
+                  {searchResults.product_location}
+                </li>
+                <li>
+                  {searchResults.total_product_count}
+                </li>
+
+              
             </div>
           )}
         </div>
