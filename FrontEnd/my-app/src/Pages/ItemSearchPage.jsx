@@ -7,7 +7,6 @@ function ItemSearchPage() {
  const [searchPerformed, setSearchPerformed] = useState(false);
  const [loading, setLoading] = useState(false);
  const [error, setError] = useState(null);
- const [error, setError] = useState(null);
  
 
  const handleSearchChange = (event) => {
@@ -66,7 +65,7 @@ const fetchItems = async (query) => {
           {error && <p className='mt-4 text-red-500'>{error}</p>}
           {error && <p className='mt-4 text-red-500'>{error}</p>}
           {/* Display search results */}
-          {searchResults.length === {} && searchPerformed ? (
+          {searchResults.length === 0 && searchPerformed ? (
             <p className='mt-4'>No results found.</p>
           ) : (
             <div>
