@@ -145,8 +145,8 @@ app.post("/Login", async (req, res) => {
   }
 });
 
-app.get("/searchItems", async (req, res) => {
-  const {item} = req.body
+app.get("/searchItems/:item", async (req, res) => {
+  const {item} = req.params
 
   // const query = req.query.search; // Get the search query from the request
  
