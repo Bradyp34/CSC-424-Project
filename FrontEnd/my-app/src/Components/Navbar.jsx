@@ -44,8 +44,8 @@ const Navbar = () => {
         '><a href="/">PixelGear Inventory</a></h1>
         <ul>
         <li className='p-4 border-b border-gray-600'><a href='/login'>Login</a></li>
-        <li className='p-4 border-b border-gray-600'><a href='/Inventory'>Item Search</a></li>
-        <li className='p-4 border-b border-gray-600'><a href='/ItemSearch'>Inventory</a></li>
+        <li className='p-4 border-b border-gray-600'><a href='/ItemSearch'>Item Search</a></li>
+        <li className='p-4 border-b border-gray-600'><a href='/Inventory'>Inventory</a></li>
         <li className='p-4 border-b border-gray-600'><a href='/Account'>Account</a></li>
         <li className='p-4 border-b border-gray-600'><a href='/AccountCreation'>AccountCreation</a></li>
         </ul>
