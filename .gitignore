@@ -4,7 +4,7 @@
 
 .vs/
 BackEnd/node_modules
-FrontEnd/ne_modules
+FrontEnd/node_modules
 node_modules
 BackEnd/database.db
 BackEnd/product_database.db
