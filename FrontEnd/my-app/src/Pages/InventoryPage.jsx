@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../Components/Navbar'
 import DataFetching from '../Components/DataFetching'
 import ShowItems from '../Components/ShowItems'
+import EditButton from '../Components/EditButton'
 
 function InventoryPage() {
   return (
@@ -13,7 +14,7 @@ function InventoryPage() {
             <div>
               <DataFetching></DataFetching>
               <ShowItems></ShowItems>
-            
+              <EditButton></EditButton>
             </div>
         </div>
       </div>
