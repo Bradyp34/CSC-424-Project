@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS products;
 CREATE TABLE products (
     product_id INTEGER PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
-    product_type VARCHAR(255) NOT NULL,
+    product_type VARCHAR(255) NOT NULL DEFAULT '',
     product_location VARCHAR(255) NOT NULL,
     product_details VARCHAR(255) NOT NULL DEFAULT '',
     total_product_count INTEGER NOT NULL DEFAULT 0 CHECK (total_product_count >= 0),

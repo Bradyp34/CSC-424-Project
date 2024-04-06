@@ -5,7 +5,7 @@ function AddItem() {
 
   const [data, setData] = useState({
     product_name: '',
-    product_type: '',
+    product_details: '',
     product_location: '',
     total_product_count: ''
   });
@@ -21,7 +21,7 @@ function AddItem() {
         console.log(response)
         setData({
             product_name: '',
-            product_type: '',
+            product_details: '',
             product_location: '',
             total_product_count: '' // Assuming you want to reset this as well
         });
@@ -35,7 +35,7 @@ function AddItem() {
       <h3 className="text-2xl font-bold mb-4">Add New Product</h3>
       <form onSubmit={handleSubmit} className="w-full text-left border-collapse">
         <input type="text" name="product_name" placeholder="Product Name" value={data.product_name} onChange={handleChange} required className="border px-4 py-2" />
-        <input type="text" name="product_type" placeholder="Product Type" value={data.product_type} onChange={handleChange} required className="border px-4 py-2" />
+        <input type="text" name="product_details" placeholder="Product Details" value={data.product_details} onChange={handleChange} required className="border px-4 py-2" />
         <input type="text" name="product_location" placeholder="Product Location" value={data.product_location} onChange={handleChange} required className="border px-4 py-2" />
         <input type="number" name="total_product_count" placeholder="Total Product Count" value={data.total_product_count} onChange={handleChange} required className="border px-4 py-2" />
         <button type="submit" className="border px-4 py-2">Add Product</button>

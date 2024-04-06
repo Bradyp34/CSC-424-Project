@@ -167,9 +167,9 @@ app.get("/searchItems/:item", async (req, res) => {
 
 app.post("/addProduct", async (req, res) => {
   try {
-    const { product_name, product_type, product_location, total_product_count } = req.body;
+    const { product_name, product_details, product_location, total_product_count } = req.body;
 
-    if (!product_name || !product_type || !product_location || !total_product_count) {
+    if (!product_name || !product_details || !product_location || !total_product_count) {
       return res.status(400).send("Missing Parameters");
     }
 
@@ -180,7 +180,7 @@ app.post("/addProduct", async (req, res) => {
       product_db.prepare("UPDATE products SET total_product_count = ? WHERE product_name = ?").run(updatedCount, product_name);
       return res.status(201).send("Product count updated successfully");
     } else {
-      product_db.prepare("INSERT INTO products (product_name, product_type, product_location, total_product_count) VALUES (?, ?, ?, ?)").run(product_name, product_type, product_location, total_product_count);
+      product_db.prepare("INSERT INTO products (product_name, product_details, product_location, total_product_count) VALUES (?, ?, ?, ?)").run(product_name, product_details, product_location, total_product_count);
       return res.status(201).send("Product added successfully");
     }
 
