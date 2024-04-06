@@ -129,13 +129,13 @@ describe("Server API Test Suite", function () {
       });
   });
 
-  // Test case: Check if an admin can register a new regular account
+  // Test case: Check if an admin can register a new non-admin account
 it("Should allow registration of a new user by an admin", function (done) {
   const newUser = {
     username: "newuser2",
     email: "newuser2@example.com",
     password: "newpassword2",
-    user_type: "regular",
+    user_type: "non-admin",
   };
   request(app)
     .post("/Register")
@@ -154,7 +154,7 @@ it("Should allow registration of a new user by an admin", function (done) {
       username: "newuser2",
       email: "newuser233@example.com",
       password: "newpassword2",
-      user_type: "regular",
+      user_type: "non-admin",
     };
 
     request(app)
@@ -173,7 +173,7 @@ it("Should allow registration of a new user by an admin", function (done) {
       username: "newuser21",
       email: "newuser2@example.com",
       password: "newpassword2",
-      user_type: "regular",
+      user_type: "non-admin",
     };
     request(app)
       .post("/Register")

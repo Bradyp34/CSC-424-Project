@@ -7,7 +7,7 @@ function CreateUser() {
         username: '',
         email: '',
         password: '',
-        user_type: { 'regular': 'admin' }
+        user_type: 'non-admin'
     });
 
     const handleChange = (e) => {
@@ -24,7 +24,7 @@ function CreateUser() {
                 username: '',
                 email: '',
                 password: '',
-                user_type: '' // Assuming you want to reset this as well
+                user_type: 'non-admin'
             });
         } catch (error) {
             console.error(error);
@@ -39,7 +39,7 @@ function CreateUser() {
                 <input type="email" name="email" placeholder="Email" value={data.email} onChange={handleChange} required />
                 <input type="password" name="password" placeholder="Password" value={data.password} onChange={handleChange} required />
                 <select name="user_type" value={data.user_type} onChange={handleChange}>
-                    <option value="regular">non-admin</option>
+                    <option value="non-admin">non-admin</option>
                     <option value="admin">admin</option>
                 </select>
                 <button type="submit">Add User</button>

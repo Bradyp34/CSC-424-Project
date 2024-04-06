@@ -79,7 +79,7 @@ app.post("/Register", async (req, res) => {
     return;
   }
  
-  if (user_type !== "admin" && user_type !=="regular") {
+  if (user_type !== "admin" && user_type !=="non-admin") {
     res.status(400).send("Invalid User Type");
     return;
   } 
