@@ -8,6 +8,7 @@ import InventoryPage from './Pages/InventoryPage';
 import AccountPage from './Pages/AccountPage';
 import LoginSuccess from './Pages/LoginSuccess';
 import AccountCreation from './Pages/AccountCreation';
+import EditPage from './Pages/EditPage';
 
 import {
   createBrowserRouter,
@@ -44,7 +45,11 @@ const router = createBrowserRouter([
   },
   {
     path:"AccountCreation",
-    element: <AccountCreation/>
+      element: <AccountCreation />
+  },
+  {
+      path: "EditPage",
+      element: <EditPage />
   }
 ])
 

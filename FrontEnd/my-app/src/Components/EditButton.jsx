@@ -5,12 +5,12 @@ function EditButton({ productId }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/editProduct/${productId}`); // Corrected usage
+        navigate(`/editPage`); // Corrected usage
     };
 
     return (
         <div>
-            <button onClick={handleClick}>Edit</button>
+            {/*<button onClick={handleClick}>Edit</button>*/}
         </div>
     );
 }
