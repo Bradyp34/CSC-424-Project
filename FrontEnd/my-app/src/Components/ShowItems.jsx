@@ -32,17 +32,17 @@ const ShowItems = () => {
                 </thead>
                 <tbody>
                     {
-                        itemData.map((item, i) => (
-                            <tr key={i} className={i % 2 === 0 ? 'bg-gray-100' : ''}>
-                                <td className="border px-4 py-2">{i + 1}</td>
+                        itemData.map((item, i) => ( // Added 'i' to capture the index of the current item
+                            <tr key={i} className={i % 2 === 0 ? 'bg-gray-100' : ''}> {/* Use 'i' for the key and background color logic */}
                                 <td className="border px-4 py-2">{item.product_id}</td>
                                 <td className="border px-4 py-2">{item.product_name}</td>
-                                <td className="border px-4 py-2">{item.product_type}</td>
+                                {/*<td className="border px-4 py-2">{item.product_type}</td>*/}
                                 <td className="border px-4 py-2">{item.product_location}</td>
                                 <td className="border px-4 py-2">{item.product_details}</td>
                                 <td className="border px-4 py-2">{item.total_product_count}</td>
                             </tr>
                         ))
+
                     }
                 </tbody>
             </table>

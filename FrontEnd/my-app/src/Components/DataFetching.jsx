@@ -18,7 +18,13 @@ function DataFetching() {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8080/addProduct', data)
-      console.log(response)
+        console.log(response)
+        setData({
+            product_name: '',
+            product_type: '',
+            product_location: '',
+            total_product_count: '' // Assuming you want to reset this as well
+        });
     } catch (error) {
       console.error(error)
     }
