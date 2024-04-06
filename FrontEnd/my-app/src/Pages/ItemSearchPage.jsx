@@ -79,7 +79,7 @@ const fetchItems = async (query) => {
                   {searchResults.product_name}
                 </li>
                 <li>
-                  {searchResults.product_type}
+                  {searchResults.product_details}
                 </li>
                 <li>
                   {searchResults.product_location}
