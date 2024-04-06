@@ -25,8 +25,8 @@ function DataFetching() {
   }
 
   return (
-    <div>
-      <form>
+      <div>
+        <form onSubmit={handleSubmit}>
         <input type="text" name="product_name" placeholder="Product Name" value={data.product_name} onChange={handleChange} required />
         <input type="text" name="product_type" placeholder="Product Type" value={data.product_type} onChange={handleChange} required />
         <input type="text" name="product_location" placeholder="Product Location" value={data.product_location} onChange={handleChange} required />
