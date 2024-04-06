@@ -10,7 +10,7 @@ const ShowItems = () => {
 
     const fetchData = async () => {
         try {
-            const result = await axios.get("http://localhost:3000/allProduct");
+            const result = await axios.get("http://localhost:8080/allProduct");
             setitemData(result.data);
         } catch (err) {
             console.log("Something Wrong");

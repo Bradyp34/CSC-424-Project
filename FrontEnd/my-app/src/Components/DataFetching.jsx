@@ -17,7 +17,7 @@ function DataFetching() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/addProduct', data)
+      const response = await axios.post('http://localhost:8080/addProduct', data)
       console.log(response)
     } catch (error) {
       console.error(error)
