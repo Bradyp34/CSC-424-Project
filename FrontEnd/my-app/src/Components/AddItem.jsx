@@ -5,7 +5,7 @@ function AddItem() {
 
   const [data, setData] = useState({
     product_name: '',
-    product_details: '',
+    product_type: '',
     product_location: '',
     total_product_count: ''
   });
@@ -21,7 +21,7 @@ function AddItem() {
         console.log(response)
         setData({
             product_name: '',
-            product_details: '',
+            product_type: '',
             product_location: '',
             total_product_count: '' // Assuming you want to reset this as well
         });
@@ -34,7 +34,7 @@ function AddItem() {
       <div>
         <form onSubmit={handleSubmit}>
         <input type="text" name="product_name" placeholder="Product Name" value={data.product_name} onChange={handleChange} required />
-        <input type="text" name="product_details" placeholder="Product Details" value={data.product_details} onChange={handleChange} required />
+        <input type="text" name="product_type" placeholder="Product Type" value={data.product_type} onChange={handleChange} required />
         <input type="text" name="product_location" placeholder="Product Location" value={data.product_location} onChange={handleChange} required />
         <input type="number" name="total_product_count" placeholder="Total Product Count" value={data.total_product_count} onChange={handleChange} required />
         <button type="submit" onClick={e => handleChange(e)}>Add Product</button>
