@@ -27,9 +27,9 @@ function CreateUser() {
     return (
         <div>
             <form>
-                <input type="text" name="username" placeholder="Product Name" value={data.username} onChange={handleChange} required />
-                <input type="text" name="product_type" placeholder="Product Type" value={data.email} onChange={handleChange} required />
-                <input type="text" name="product_location" placeholder="Product Location" value={data.password} onChange={handleChange} required />
+                <input type="text" name="username" placeholder="Username" value={data.username} onChange={handleChange} required />
+                <input type="text" name="email" placeholder="Email" value={data.email} onChange={handleChange} required />
+                <input type="text" name="password" placeholder="Password" value={data.password} onChange={handleChange} required />
                 <select name="user_type" value={data.user_type}>
                     <option value="regular"></option>
                     <option value="admin"></option>
