@@ -191,11 +191,14 @@ app.post("/addProduct", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 app.get("/all_products", async (req, res) => {
     const statement = db.prepare("select * from products").all();
     res.status(200).send(statement);
 });
 
+=======
+>>>>>>> origin/main
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);

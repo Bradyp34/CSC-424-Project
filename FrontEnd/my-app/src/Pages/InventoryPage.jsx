@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import DataFetching from '../Components/DataFetching';
+=======
+import React from 'react'
+import Navbar from '../Components/Navbar'
+import DataFetching from '../Components/DataFetching'
+import ShowItems from '../Components/ShowItems'
+import EditButton from '../Components/EditButton'
+>>>>>>> origin/main
 
 function InventoryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,6 +37,7 @@ function InventoryPage() {
       
       <div className='text-black flex-col h-screen mt-[50px] bg-gray-900'>
         <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] justify-center bg-white'>
+<<<<<<< HEAD
           <table>
             <DataFetching />
           </table>
@@ -53,6 +62,13 @@ function InventoryPage() {
               </div>
             </div>
           )} 
+=======
+            <div>
+              <DataFetching></DataFetching>
+              <ShowItems></ShowItems>
+              <EditButton></EditButton>
+            </div>
+>>>>>>> origin/main
         </div>
       </div>
     </div>
