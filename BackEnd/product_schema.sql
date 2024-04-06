@@ -5,8 +5,8 @@ CREATE TABLE products (
     product_name VARCHAR(255) NOT NULL,
     product_type VARCHAR(255) NOT NULL,
     product_location VARCHAR(255) NOT NULL,
-    product_details VARCHAR(255) NOT NULL,
-    total_product_count INTEGER NOT NULL CHECK (total_product_count >= 0),
+    product_details VARCHAR(255) NOT NULL DEFAULT '',
+    total_product_count INTEGER NOT NULL DEFAULT 0 CHECK (total_product_count >= 0),
     -- Ensure total count is non-negative
     product_status VARCHAR(255) NOT NULL DEFAULT 'available' CHECK (
         product_status IN ('available', 'sold', 'on-hold')
