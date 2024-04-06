@@ -191,6 +191,12 @@ app.post("/addProduct", async (req, res) => {
   }
 });
 
+app.get("/all_products", async (req, res) => {
+    const statement = product_db.prepare("select * from products").all(); // Use product_db here
+    res.status(200).send(statement);
+});
+
+
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
