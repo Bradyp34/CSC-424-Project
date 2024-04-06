@@ -13,8 +13,8 @@ function InventoryPage() {
         <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] justify-center bg-white'>
             <div>
               <DataFetching></DataFetching>
-              <ShowItems></ShowItems>
               <EditButton></EditButton>
+              <ShowItems></ShowItems>
             </div>
         </div>
       </div>
