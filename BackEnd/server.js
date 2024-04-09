@@ -199,14 +199,13 @@ app.get("/all_products", async (req, res) => {
 
 app.put('/updateProduct/:productId', (req, res) => {
     const { productId } = req.params;
-    const { product_name, product_type, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count } = req.body;
+    const { product_name, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count } = req.body;
 
     try {
         const stmt = product_db.prepare(`
       UPDATE products 
       SET 
-        product_name = ?, 
-        product_type = ?, 
+        product_name = ?,  
         product_location = ?, 
         product_details = ?, 
         total_product_count = ?, 
@@ -215,7 +214,7 @@ app.put('/updateProduct/:productId', (req, res) => {
         product_on_hold_count = ?
       WHERE product_id = ?`);
 
-        const info = stmt.run(product_name, product_type, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count, productId);
+        const info = stmt.run(product_name, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count, productId);
 
         if (info.changes > 0) {
             res.status(200).json({ message: "Product updated successfully." });

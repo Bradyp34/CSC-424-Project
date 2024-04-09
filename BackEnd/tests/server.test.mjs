@@ -265,7 +265,6 @@ it("Should allow registration of a new user by an admin", function (done) {
       const newProduct = {
         product_name: "sampleProduct",
         product_details: "sample product description",
-        product_type: "sampleType",
         product_location: "sampleLocation",
         total_product_count: 10
       }
@@ -285,7 +284,6 @@ it("Should allow registration of a new user by an admin", function (done) {
     const productIdToUpdate = 1; // Assuming productId 1 exists in the database
     const updatedProductData = {
       product_name: "Updated Product Name",
-      product_type: "Updated Product Type",
       product_location: "Updated Product Location",
       product_details: "Updated Product Details",
       total_product_count: 100,
@@ -310,7 +308,6 @@ it("Should allow registration of a new user by an admin", function (done) {
     const nonExistingProductId = 9999; // Assuming productId 9999 does not exist in the database
     const updatedProductData = {
       product_name: "Updated Product Name",
-      product_type: "Updated Product Type",
       product_location: "Updated Product Location",
       product_details: "Updated Product Details",
       total_product_count: 100,
