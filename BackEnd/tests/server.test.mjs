@@ -264,6 +264,7 @@ it("Should allow registration of a new user by an admin", function (done) {
       const expectedMessage = "Product added successfully";
       const newProduct = {
         product_name: "sampleProduct",
+        product_details: "sample product description",
         product_type: "sampleType",
         product_location: "sampleLocation",
         total_product_count: 10
@@ -278,7 +279,52 @@ it("Should allow registration of a new user by an admin", function (done) {
           done();
         });
     });
+  
+    // Test case: Update an existing product
+  it("Should update an existing product", function (done) {
+    const productIdToUpdate = 1; // Assuming productId 1 exists in the database
+    const updatedProductData = {
+      product_name: "Updated Product Name",
+      product_type: "Updated Product Type",
+      product_location: "Updated Product Location",
+      product_details: "Updated Product Details",
+      total_product_count: 100,
+      product_status: "sold",
+      product_sale_count: 50,
+      product_on_hold_count: 10
+    };
 
+    request(app)
+      .put(`/updateProduct/${productIdToUpdate}`)
+      .send(updatedProductData)
+      .expect(200) // Expecting a successful update
+      .end((err, res) => {
+        if (err) return done(err);
+        assert.strictEqual(res.body.message, "Product updated successfully.");
+        done();
+      });
+  });
+
+  // Test case: Try to update a non-existing product
+  it("Should return 404 when updating a non-existing product", function (done) {
+    const nonExistingProductId = 9999; // Assuming productId 9999 does not exist in the database
+    const updatedProductData = {
+      product_name: "Updated Product Name",
+      product_type: "Updated Product Type",
+      product_location: "Updated Product Location",
+      product_details: "Updated Product Details",
+      total_product_count: 100,
+      product_status: "on-hold",
+      product_sale_count: 50,
+      product_on_hold_count: 10
+    };
+
+    request(app)
+      .put(`/updateProduct/${nonExistingProductId}`)
+      .send(updatedProductData)
+      .expect(404) // Expecting product not found
+      .end(done);
+  });
   // Close the server after all tests have completed
   after(function () {
     server.close();
