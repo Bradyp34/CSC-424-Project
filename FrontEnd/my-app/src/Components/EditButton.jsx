@@ -10,7 +10,7 @@ function EditButton({ productId }) {
 
     return (
         <div>
-            {/*<button onClick={handleClick}>Edit</button>*/}
+            {<button onClick={handleClick}>Edit</button>}
         </div>
     );
 }
