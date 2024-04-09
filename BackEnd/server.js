@@ -12,7 +12,7 @@ const fs = require("fs");
 const { debugPort } = require("process");
 const { use } = import("chai");
 const PORT = 8080;
-const activity_log_file = "log.txt";
+const activity_log_file = "log.log";
 const current_time = new Date();
 
 const db = sqlite("database.db");
