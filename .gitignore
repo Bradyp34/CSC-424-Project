@@ -3,3 +3,10 @@
 ################################################################################
 
 /.vs
+node_modules
+/BackEnd/node_modules
+/BackEnd/log.txt
+/BackEnd/log.log
+/BackEnd/database.db
+/BackEnd/product_database.db
+/FrontEnd/node_modules
