@@ -227,6 +227,38 @@ app.put('/updateProduct/:productId', (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+app.post("/removeProduct/:productId", async (req, res) => {
+  try {
+    const productId = req.params.productId;
+
+    if (!productId) {
+      return res.status(400).send("Product ID is missing.");
+    }
+
+    const existingProduct = product_db.prepare("SELECT * FROM products WHERE product_id = ?").get(productId);
+    if (!existingProduct) {
+      return res.status(404).send("Product not found.");
+    }
+
+    const { product_status } = existingProduct;
+
+    if (product_status === "sold") {
+      product_db.prepare("UPDATE products SET product_sale_count = product_sale_count - 1 WHERE product_id = ?").run(productId);
+    } else if (product_status === "on-hold") {
+      product_db.prepare("UPDATE products SET product_on_hold_count = product_on_hold_count - 1 WHERE product_id = ?").run(productId);
+    }
+
+    product_db.prepare("DELETE FROM products WHERE product_id = ?").run(productId);
+
+
+    return res.status(200).send("Product Removed");
+  } catch (error) {
+    console.error("Error removing product:", error);
+    return res.status(500).send("Internal server error");
+  }
+});
+
+
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
