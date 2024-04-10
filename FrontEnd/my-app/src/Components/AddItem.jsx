@@ -38,7 +38,8 @@ function AddItem() {
         <input type="text" name="product_details" placeholder="Product Details" value={data.product_details} onChange={handleChange} required className="border px-4 py-2" />
         <input type="text" name="product_location" placeholder="Product Location" value={data.product_location} onChange={handleChange} required className="border px-4 py-2" />
         <input type="number" name="total_product_count" placeholder="Total Product Count" value={data.total_product_count} onChange={handleChange} required className="border px-4 py-2" />
-        <button type="submit" className="border px-4 py-2">Add Product</button>
+        <button type="submit" class="bg-blue-500 text-white px-2 py-1 w-auto hover:bg-blue-700">Add Product</button>
+
       </form>
     </div>
  );
