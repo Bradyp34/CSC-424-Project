@@ -12,7 +12,7 @@ const fs = require("fs");
 const { debugPort } = require("process");
 const { use } = import("chai");
 const PORT = 8080;
-const activity_log_file = "log.txt";
+const activity_log_file = "log.log";
 const current_time = new Date();
 
 const db = sqlite("database.db");
@@ -199,14 +199,13 @@ app.get("/all_products", async (req, res) => {
 
 app.put('/updateProduct/:productId', (req, res) => {
     const { productId } = req.params;
-    const { product_name, product_type, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count } = req.body;
+    const { product_name, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count } = req.body;
 
     try {
         const stmt = product_db.prepare(`
       UPDATE products 
       SET 
-        product_name = ?, 
-        product_type = ?, 
+        product_name = ?,  
         product_location = ?, 
         product_details = ?, 
         total_product_count = ?, 
@@ -215,7 +214,7 @@ app.put('/updateProduct/:productId', (req, res) => {
         product_on_hold_count = ?
       WHERE product_id = ?`);
 
-        const info = stmt.run(product_name, product_type, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count, productId);
+        const info = stmt.run(product_name, product_location, product_details, total_product_count, product_status, product_sale_count, product_on_hold_count, productId);
 
         if (info.changes > 0) {
             res.status(200).json({ message: "Product updated successfully." });
@@ -227,6 +226,38 @@ app.put('/updateProduct/:productId', (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+app.post("/removeProduct/:productId", async (req, res) => {
+  try {
+    const productId = req.params.productId;
+
+    if (!productId) {
+      return res.status(400).send("Product ID is missing.");
+    }
+
+    const existingProduct = product_db.prepare("SELECT * FROM products WHERE product_id = ?").get(productId);
+    if (!existingProduct) {
+      return res.status(404).send("Product not found.");
+    }
+
+    const { product_status } = existingProduct;
+
+    if (product_status === "sold") {
+      product_db.prepare("UPDATE products SET product_sale_count = product_sale_count - 1 WHERE product_id = ?").run(productId);
+    } else if (product_status === "on-hold") {
+      product_db.prepare("UPDATE products SET product_on_hold_count = product_on_hold_count - 1 WHERE product_id = ?").run(productId);
+    }
+
+    product_db.prepare("DELETE FROM products WHERE product_id = ?").run(productId);
+
+
+    return res.status(200).send("Product Removed");
+  } catch (error) {
+    console.error("Error removing product:", error);
+    return res.status(500).send("Internal server error");
+  }
+});
+
+
 
 const server = app.listen(PORT, () => {
   console.log(`server now live on ${PORT}`);
