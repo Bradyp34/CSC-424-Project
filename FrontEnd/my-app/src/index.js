@@ -9,6 +9,8 @@ import AccountPage from './Pages/AccountPage';
 import LoginSuccess from './Pages/LoginSuccess';
 import AccountCreation from './Pages/AccountCreation';
 import EditPage from './Pages/EditPage';
+import { UserProvider } from './context/UserType';
+
 
 import {
   createBrowserRouter,
@@ -55,7 +57,10 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <RouterProvider router={router}/>
+
+  <UserProvider>
+    <RouterProvider router={router}/>
+  </UserProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

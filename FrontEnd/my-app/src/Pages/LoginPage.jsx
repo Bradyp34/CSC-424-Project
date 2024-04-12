@@ -1,53 +1,32 @@
 import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import LoginSuccess from "./LoginSuccess"; // Import your DashboardPage component
+import { loginUser } from "../Components/ApiCalls";
+import { useUser } from "../context/UserType";
 
-function LoginPage() {
- const [showPassword, setShowPassword] = useState(false);
- const [username, setUsername] = useState('');
- const [password, setPassword] = useState('');
+const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const { setUser } = useUser();
 
  const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
  };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {    
+    const data = await loginUser(username, password);
+    console.log('Login successful:', data);
+    setUser({ username: data.username, user_type: data.user_type });
+  } catch (error) {
+    console.log('Wrong UserName/Password:', error);
+    setError('Wrong Username/Password. Please Try Again');
+  }
+};
 
-    try {
-      // Make a POST request to your backend API to authenticate the user
-      const response = await fetch("http://localhost:8080/Login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: event.target.username.value,
-          password: event.target.password.value,
-        }),
-      });
-
-      if (!response.ok) {
-        console.log(response)
-        throw new Error("Login failed"); // You can customize the error message as needed
-      }
-
-      // Assuming your backend returns a simple string as confirmation upon successful authentication
-      const token = await response.text();
-
-      // Redirect to the desired page upon successful login
-      // Redirect to DashboardPage component
-      // Note: If you need to pass any props, you can use the `render` method instead of `component` prop
-      // Example: <Route path="/dashboard" render={(props) => <DashboardPage {...props} token={token} />} />
-      if (token === "Login confirmed") {
-        window.location.href = "/LoginSuccess"; // Replace '/dashboard' with your desired route
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      // Handle login failure (display error message, etc.)
-    }
-  };
 
   return (
     <div>
@@ -64,6 +43,8 @@ function LoginPage() {
                 type="text"
                 id="username"
                 name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:bg-gray-600"
               />
             </div>
@@ -76,6 +57,8 @@ function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:bg-gray-600"
                 />
                 <button
@@ -87,6 +70,7 @@ function LoginPage() {
                 </button>
               </div>
             </div>
+            {error && <div className="text-red-500 mb-4">{error}</div>}
             <button
               type="submit"
               className="w-full py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 focus:outline-none focus:bg-cyan-700"
