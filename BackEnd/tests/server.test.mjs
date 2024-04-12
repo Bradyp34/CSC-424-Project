@@ -218,7 +218,8 @@ it("Should allow registration of a new user by an admin", function (done) {
       .expect(200)
       .end(function (err, res) {
         if (err) return done(err);
-        assert.strictEqual(res.text, expectedGreeting);
+        const response = JSON.parse(res.text)
+        assert.strictEqual(response.message, expectedGreeting);
         done();
       });
   });
