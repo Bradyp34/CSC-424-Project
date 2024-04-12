@@ -139,7 +139,7 @@ app.post("/Login", async (req, res) => {
     if (!userWithPassword) {
       return res.status(400).send("Invalid Credentials");
     }
-    res.status(200).send("Login confirmed");
+    res.status(200).send(userWithPassword.user_type);
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal server error");
