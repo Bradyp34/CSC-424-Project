@@ -15,13 +15,18 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
  };
 
+ const { user } = useUser();
+
  const handleSubmit = async (e) => {
   e.preventDefault();
   try {    
     const data = await loginUser(username, password);
     console.log('Login successful:', data);
-    setUser({ username: data.username, user_type: data.user_type });
-  } catch (error) {
+    if (data.user_type) {  // Make sure the data contains user_type before setting
+      setUser({ username: data.username, user_type: data.user_type });
+    } else {
+      setError('Login successful but the user data is incomplete.');
+    }  } catch (error) {
     console.log('Wrong UserName/Password:', error);
     setError('Wrong Username/Password. Please Try Again');
   }
@@ -34,6 +39,7 @@ const LoginPage = () => {
       <div className="grid place-items-center h-screen bg-gray-900 text-white">
         <div className="max-w-md w-full p-8 bg-gray-800 rounded-lg">
           <h2 className="text-3xl font-bold mb-4">Login</h2>
+          {/* <h2 className="text-2xl font-bold mb-4">User Type: {user.user_type}</h2> */}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="username" className="block mb-2">
@@ -60,7 +66,7 @@ const LoginPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-3 py-2 bg-gray-700 rounded-md focus:outline-none focus:bg-gray-600"
-                />
+                  />
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
