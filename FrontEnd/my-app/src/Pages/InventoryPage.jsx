@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar';
 import AddItem from '../Components/AddItem';
 import ShowItems from '../Components/ShowItems';
 import EditButton from '../Components/EditButton';
+import UpdateButton from '../Components/UpdateButton';
 
 function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -96,6 +97,7 @@ function InventoryPage() {
                         <AddItem />
                         <EditButton />
                         <ShowItems />
+                        <UpdateButton />
                     </div>
                 </div>
             </div>
