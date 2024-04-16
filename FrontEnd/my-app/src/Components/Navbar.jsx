@@ -28,7 +28,6 @@ const Navbar = () => {
        '><a href="/">PixelGear Inventory</a></h1>
       <ul className='hidden md:flex whitespace-nowrap' >
         <li className='p-4'><a href='/Login'>Login</a></li>
-        <li className='p-4'><a href='/ItemSearch'>Item Search</a></li>
         <li className='p-4'><a href='/Inventory'>Inventory</a></li>
         <li className='p-4'><a href='/Account'>{user?.username}</a></li>
         <li className='p-4'>{user?.user_type}</li>
