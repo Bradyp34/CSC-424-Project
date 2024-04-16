@@ -6,19 +6,26 @@ import EditButton from '../Components/EditButton';
 
 function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState({});
+    const [searchResults, setSearchResults] = useState(null); // Initialize to null to distinguish no search done yet
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+        if (error) {
+            setError(null);  // Clear error when user starts typing again
+        }
     };
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
+        if (!searchQuery.trim()) {
+            setError("Please enter a valid query.");
+            return;
+        }
         setSearchPerformed(true);
-        fetchItems(searchQuery).then(() => setSearchQuery(''));
+        fetchItems(searchQuery);
     };
 
     // Function to fetch items from the backend
@@ -32,12 +39,20 @@ function InventoryPage() {
                 },
             });
             const data = await response.json();
-            setSearchResults(data); // The API returns an object of the response
+            if (data && Object.keys(data).length) {
+                setSearchResults(data); // The API returns an object of the response
+                setError(null); // Clear any previous error
+            } else {
+                setSearchResults(null);
+                setError('No results found.');
+            }
         } catch (error) {
             console.error('Error fetching items:', error);
             setError('Error fetching items. Please try again later.');
+            setSearchResults(null);
         } finally {
             setLoading(false); // Stop loading when done
+            setSearchQuery(''); // Clear the search query
         }
     };
 
@@ -64,9 +79,7 @@ function InventoryPage() {
                     </form>
                     {error && <p className='mt-4 text-red-500'>{error}</p>}
                     {/* Display search results */}
-                    {searchResults.length === 0 && searchPerformed ? (
-                        <p className='mt-4'>No results found.</p>
-                    ) : (
+                    {searchResults && (
                         <div>
                             <h3 className='text-2xl font-bold mt-4'>Results:</h3>
                             <ul>
