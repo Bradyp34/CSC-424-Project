@@ -12,7 +12,7 @@ function UpdateButton() {
     };
 
     return (
-        <button onClick={handleUpdate} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+        <button onClick={handleUpdate} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Update All Items
         </button>
     );

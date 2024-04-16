@@ -95,8 +95,8 @@ function InventoryPage() {
                 <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] bg-white'>
                     <div className="flex justify-center">
                         <AddItem />
-                        <EditButton />
                         <ShowItems />
+                        <EditButton />
                         <UpdateButton />
                     </div>
                 </div>
