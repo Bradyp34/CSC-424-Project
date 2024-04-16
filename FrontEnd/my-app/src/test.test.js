@@ -4,7 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 // Import components. Adjust the paths according to your project structure.
 import LoginPage from './Pages/LoginPage';
-import ItemSearchPage from './Pages/ItemSearchPage';
 import InventoryPage from './Pages/InventoryPage';
 import AccountPage from './Pages/AccountPage';
 
@@ -35,12 +34,6 @@ describe('React Component Render Tests', () => {
 
         // The password should be hidden again
         expect(passwordInput).toHaveAttribute('type', 'password');
-    });
-
-    test('ItemSearchPage should render without crashing', () => {
-        render(<ItemSearchPage />);
-        // Tests if page loads by searching for "Search" button on the page
-        expect(screen.getByRole('button', { name: /Search/i })).toBeInTheDocument();
     });
 
     test('InventoryPage should render without crashing', () => {

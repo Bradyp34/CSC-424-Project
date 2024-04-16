@@ -44,10 +44,10 @@ function InventoryPage() {
     return (
         <div>
             <Navbar />
-            <div className='text-white flex-col mt-[50px] bg-gray-900'>
+            <div className='flex flex-col items-center justify-center mt-[50px] bg-gray-900'>
                 <div className='max-w-md w-full p-8 bg-gray-800 rounded-lg'>
                     <h2 className='text-3xl font-bold mb-4'>Item Search</h2>
-                    <form onSubmit={handleSearchSubmit}>
+                    <form onSubmit={handleSearchSubmit} className='flex flex-col items-center'>
                         <input
                             type='text'
                             value={searchQuery}
@@ -78,7 +78,7 @@ function InventoryPage() {
                         </div>
                     )}
                 </div>
-                <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] justify-center bg-white'>
+                <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] bg-white'>
                     <div className="flex justify-center">
                         <AddItem />
                         <EditButton />

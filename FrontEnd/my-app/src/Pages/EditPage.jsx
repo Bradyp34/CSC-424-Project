@@ -4,10 +4,20 @@ import EditItem from '../Components/EditItem';
 
 function EditPage() {
     const [productName, setProductName] = useState('');
+    const [triggerFetch, setTriggerFetch] = useState(false);
     const navigate = useNavigate();
 
     const handleNavigation = () => {
         navigate('/Inventory');
+    };
+
+    const handleProductNameChange = (e) => {
+        setProductName(e.target.value);
+        setTriggerFetch(false); // Reset trigger on text change
+    };
+
+    const handleProductNameBlur = () => {
+        setTriggerFetch(true); // Set trigger to true when input loses focus
     };
 
     return (
@@ -19,11 +29,12 @@ function EditPage() {
                     <input
                         type="text"
                         value={productName}
-                        onChange={(e) => setProductName(e.target.value)}
+                        onChange={handleProductNameChange}
+                        onBlur={handleProductNameBlur}
                         placeholder="Enter product name"
                         className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     />
-                    <EditItem productName={productName} onSubmission={handleNavigation} />
+                    <EditItem productName={productName} triggerFetch={triggerFetch} onSubmission={handleNavigation} />
                 </div>
             </div>
         </div>

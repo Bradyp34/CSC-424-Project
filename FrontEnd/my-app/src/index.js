@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import LoginPage from './Pages/LoginPage';
-import ItemSearchPage from './Pages/ItemSearchPage';
 import InventoryPage from './Pages/InventoryPage';
 import AccountPage from './Pages/AccountPage';
 import LoginSuccess from './Pages/LoginSuccess';
@@ -28,10 +27,6 @@ const router = createBrowserRouter([
   {
     path: "Login",
     element: <LoginPage/>,
-  },
-  {
-    path: "ItemSearch",
-    element: <ItemSearchPage/>,
   },
   {
     path: "Inventory",

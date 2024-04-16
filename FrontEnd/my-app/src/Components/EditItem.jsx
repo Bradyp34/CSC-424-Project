@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function EditItem({ productName, onSubmission }) {
+function EditItem({ productName, triggerFetch, onSubmission }) {
     const [product, setProduct] = useState({
         product_name: '',
         product_details: '',
@@ -10,7 +10,7 @@ function EditItem({ productName, onSubmission }) {
     });
 
     useEffect(() => {
-        if (productName) {
+        if (productName && triggerFetch) {
             const fetchProduct = async () => {
                 try {
                     const response = await axios.get(`http://localhost:8080/product/${productName}`);
@@ -21,7 +21,7 @@ function EditItem({ productName, onSubmission }) {
             };
             fetchProduct();
         }
-    }, [productName]);
+    }, [productName, triggerFetch]); // React to changes in triggerFetch as well
 
     const handleChange = (e) => {
         const { name, value } = e.target;
