@@ -1,103 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function EditItem() {
-    const [productName, setProductName] = useState('');
-    const [newProductName, setNewProductName] = useState('');
-    const [productLocation, setProductLocation] = useState('');
-    const [productDetails, setProductDetails] = useState('');
-    const [totalCount, setTotalCount] = useState('');
-    const [status, setStatus] = useState('');
-    const [saleCount, setSaleCount] = useState('');
-    const [onHoldCount, setOnHoldCount] = useState('');
+function EditItem({ productName }) {
+    const [product, setProduct] = useState({
+        product_name: '',
+        product_details: '',
+        product_location: '',
+        total_product_count: 0
+    });
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await fetch(`/updateProductByName/${productName}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    new_product_name: newProductName,
-                    product_location: productLocation,
-                    product_details: productDetails,
-                    total_product_count: totalCount,
-                    product_status: status,
-                    product_sale_count: saleCount,
-                    product_on_hold_count: onHoldCount
-                })
-            });
-
-            if (response.ok) {
-                alert('Product updated successfully');
-                setProductName('');
-                setNewProductName('');
-                setProductLocation('');
-                setProductDetails('');
-                setTotalCount('');
-                setStatus('');
-                setSaleCount('');
-                setOnHoldCount('');
-            } else {
-                alert('Failed to update product');
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/product/${productName}`);
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Failed to fetch product', error);
             }
+        };
+
+        fetchProduct();
+    }, [productName]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProduct(prevProduct => ({
+            ...prevProduct,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.put(`http://localhost:8080/updateProduct/${productName}`, product);
+            // Assuming you will handle navigation in the parent component
         } catch (error) {
-            console.error('Error updating product:', error);
-            alert('Error updating product');
+            console.error('Failed to update product', error);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Edit Product</h1>
-            <input
-                type="text"
-                placeholder="Current Product Name"
-                value={productName}
-                onChange={e => setProductName(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="New Product Name"
-                value={newProductName}
-                onChange={e => setNewProductName(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Product Location"
-                value={productLocation}
-                onChange={e => setProductLocation(e.target.value)}
-            />
-            <textarea
-                placeholder="Product Details"
-                value={productDetails}
-                onChange={e => setProductDetails(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Total Product Count"
-                value={totalCount}
-                onChange={e => setTotalCount(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Product Status"
-                value={status}
-                onChange={e => setStatus(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Sale Count"
-                value={saleCount}
-                onChange={e => setSaleCount(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="On Hold Count"
-                value={onHoldCount}
-                onChange={e => setOnHoldCount(e.target.value)}
-            />
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <input type="text" name="product_name" value={product.product_name} onChange={handleChange} required />
+            <input type="text" name="product_details" value={product.product_details} onChange={handleChange} required />
+            <input type="text" name="product_location" value={product.product_location} onChange={handleChange} required />
+            <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} required />
             <button type="submit">Update Product</button>
         </form>
     );
