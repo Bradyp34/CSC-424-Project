@@ -4,12 +4,12 @@ const UserType = createContext(null);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('userData');
+    const savedUser = sessionStorage.getItem('userData');
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
   useEffect(() => {
-    localStorage.setItem('userData', JSON.stringify(user));
+    sessionStorage.setItem('userData', JSON.stringify(user));
   }, [user]);
 
   return (
