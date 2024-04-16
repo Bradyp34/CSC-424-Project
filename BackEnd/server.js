@@ -238,7 +238,7 @@ app.get("/all_products", async (req, res) => {
   res.status(200).send(statement);
 });
 
-app.put("/updateProductByName/:productName", (req, res) => {
+app.put("/updateProduct/:productName", (req, res) => {
     const { productName } = req.params;
     const {
         new_product_name,

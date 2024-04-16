@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function EditPage() {
-    const { productId } = useParams();
+    const { productName } = useParams(); // Changed to productName
     const [product, setProduct] = useState({
         product_name: '',
         product_details: '',
@@ -15,7 +15,7 @@ function EditPage() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/product/${productId}`);
+                const response = await axios.get(`http://localhost:8080/product/${productName}`); // Fetch using productName
                 setProduct(response.data);
             } catch (error) {
                 console.error('Failed to fetch product', error);
@@ -23,7 +23,7 @@ function EditPage() {
         };
 
         fetchProduct();
-    }, [productId]);
+    }, [productName]); // Dependency on productName
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,7 +36,7 @@ function EditPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:8080/updateProduct/${productId}`, product);
+            await axios.put(`http://localhost:8080/updateProduct/${product.product_name}`, product); // Update using product_name
             navigate('/ItemSearchPage');
         } catch (error) {
             console.error('Failed to update product', error);
