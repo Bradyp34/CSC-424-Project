@@ -10,4 +10,5 @@ node_modules
 /BackEnd/database.db
 /BackEnd/product_database.db
 /FrontEnd/node_modules
-/BackEnd/log.log
+/BackEnd/database.db
+/BackEnd/product_database.db
