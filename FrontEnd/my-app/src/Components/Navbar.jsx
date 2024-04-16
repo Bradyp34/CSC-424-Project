@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import { CgMenuGridO, CgClose } from 'react-icons/cg'
+import { useUser } from '../context/UserType'
+
 
 const Navbar = () => {
   const [nav, setNav] = useState(true)
@@ -7,6 +9,7 @@ const Navbar = () => {
   const handleNav = () => {
     setNav(!nav)
   }
+  const { user, setUser } = useUser();
 
   return (
     <div className='
@@ -27,7 +30,8 @@ const Navbar = () => {
         <li className='p-4'><a href='/Login'>Login</a></li>
         <li className='p-4'><a href='/ItemSearch'>Item Search</a></li>
         <li className='p-4'><a href='/Inventory'>Inventory</a></li>
-        <li className='p-4'><a href='/Account'>Account</a></li>
+        <li className='p-4'><a href='/Account'>{user?.username}</a></li>
+        <li className='p-4'>{user?.user_type}</li>
         <div onClick={handleNav} className='p-4'>
         {!nav ? <CgClose size={30}/> : <CgMenuGridO size={30}/>}
         

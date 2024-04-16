@@ -152,6 +152,7 @@ app.post("/Login", async (req, res) => {
     res.status(200).send({
       message:"Login confirmed",
       user_type: userWithPassword.user_type,
+      username: userWithPassword.username,
     });
   } catch (error) {
     console.log(error);
