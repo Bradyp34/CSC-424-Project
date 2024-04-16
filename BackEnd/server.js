@@ -238,20 +238,20 @@ app.get("/all_products", async (req, res) => {
   res.status(200).send(statement);
 });
 
-app.put("/updateProduct/:productId", (req, res) => {
-  const { productId } = req.params;
-  const {
-    product_name,
-    product_location,
-    product_details,
-    total_product_count,
-    product_status,
-    product_sale_count,
-    product_on_hold_count,
-  } = req.body;
+app.put("/updateProductByName/:productName", (req, res) => {
+    const { productName } = req.params;
+    const {
+        new_product_name,
+        product_location,
+        product_details,
+        total_product_count,
+        product_status,
+        product_sale_count,
+        product_on_hold_count,
+    } = req.body;
 
-  try {
-    const stmt = product_db.prepare(`
+    try {
+        const stmt = product_db.prepare(`
       UPDATE products 
       SET 
         product_name = ?,  
@@ -261,28 +261,28 @@ app.put("/updateProduct/:productId", (req, res) => {
         product_status = ?, 
         product_sale_count = ?, 
         product_on_hold_count = ?
-      WHERE product_id = ?`);
+      WHERE product_name = ?`);
 
-    const info = stmt.run(
-      product_name,
-      product_location,
-      product_details,
-      total_product_count,
-      product_status,
-      product_sale_count,
-      product_on_hold_count,
-      productId
-    );
+        const info = stmt.run(
+            new_product_name,
+            product_location,
+            product_details,
+            total_product_count,
+            product_status,
+            product_sale_count,
+            product_on_hold_count,
+            productName
+        );
 
-    if (info.changes > 0) {
-      res.status(200).json({ message: "Product updated successfully." });
-    } else {
-      res.status(404).json({ message: "Product not found." });
+        if (info.changes > 0) {
+            res.status(200).json({ message: "Product updated successfully." });
+        } else {
+            res.status(404).json({ message: "Product not found." });
+        }
+    } catch (error) {
+        console.error("Error updating product by name:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
-  } catch (error) {
-    console.error("Error updating product:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
 });
 
 app.post("/removeProduct/:productId", async (req, res) => {
