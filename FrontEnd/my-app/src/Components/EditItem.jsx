@@ -13,7 +13,7 @@ function EditItem({ productName, triggerFetch, onSubmission }) {
         if (productName && triggerFetch) {
             const fetchProduct = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:8080/product/${productName}`);
+                    const response = await axios.get(`http://localhost:8080/searchItems/${productName}`);
                     setProduct(response.data);
                 } catch (error) {
                     console.error('Failed to fetch product', error);
