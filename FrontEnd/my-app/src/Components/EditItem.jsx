@@ -47,9 +47,9 @@ function EditItem({ productName, triggerFetch, onSubmission }) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="text" name="product_details" value={product.product_details} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Details" />
-            <input type="text" name="product_location" value={product.product_location} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Location" />
-            <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Total Product Count" />
+            <input type="text" name="product_details" value={product.product_details} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Details" />
+            <input type="text" name="product_location" value={product.product_location} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Location" />
+            <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Total Product Count" />
             <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">Update Product</button>
         </form>
     );
