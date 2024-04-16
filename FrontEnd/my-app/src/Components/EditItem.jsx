@@ -6,7 +6,9 @@ function EditItem({ productName, triggerFetch, onSubmission }) {
         product_name: '',
         product_details: '',
         product_location: '',
-        total_product_count: 0
+        total_product_count: 0,
+        product_sale_count: 0,
+        product_on_hold_count: 0
     });
 
     useEffect(() => {
@@ -21,7 +23,7 @@ function EditItem({ productName, triggerFetch, onSubmission }) {
             };
             fetchProduct();
         }
-    }, [productName, triggerFetch]); // React to changes in triggerFetch as well
+    }, [productName, triggerFetch]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,7 +51,16 @@ function EditItem({ productName, triggerFetch, onSubmission }) {
         <form onSubmit={handleSubmit} className="space-y-4">
             <input type="text" name="product_details" value={product.product_details} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Details" />
             <input type="text" name="product_location" value={product.product_location} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Location" />
-            <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Total Product Count" />
+
+            <label className="block text-sm font-medium text-gray-700">Total Product Count</label>
+            <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+
+            <label className="block text-sm font-medium text-gray-700">Product Sale Count</label>
+            <input type="number" name="product_sale_count" value={product.product_sale_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+
+            <label className="block text-sm font-medium text-gray-700">Product On Hold Count</label>
+            <input type="number" name="product_on_hold_count" value={product.product_on_hold_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+
             <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">Update Product</button>
         </form>
     );
