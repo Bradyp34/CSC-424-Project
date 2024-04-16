@@ -5,7 +5,7 @@ function EditButton({ productId }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/editPage`); // Corrected usage
+        navigate(`/EditPage`); // Corrected usage
     };
 
     return (

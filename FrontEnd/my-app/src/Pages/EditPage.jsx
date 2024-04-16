@@ -36,7 +36,7 @@ function EditPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:8080/updateProduct/${product.product_name}`, product); // Update using product_name
+            await axios.put(`http://localhost:8080/updateProduct/${productName}`, product); // Update using product_name
             navigate('/ItemSearchPage');
         } catch (error) {
             console.error('Failed to update product', error);

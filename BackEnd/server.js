@@ -241,36 +241,24 @@ app.get("/all_products", async (req, res) => {
 app.put("/updateProduct/:productName", (req, res) => {
     const { productName } = req.params;
     const {
-        new_product_name,
         product_location,
         product_details,
-        total_product_count,
-        product_status,
-        product_sale_count,
-        product_on_hold_count,
+        total_product_count
     } = req.body;
 
     try {
         const stmt = product_db.prepare(`
       UPDATE products 
       SET 
-        product_name = ?,  
         product_location = ?, 
         product_details = ?, 
-        total_product_count = ?, 
-        product_status = ?, 
-        product_sale_count = ?, 
-        product_on_hold_count = ?
+        total_product_count = ?
       WHERE product_name = ?`);
 
         const info = stmt.run(
-            new_product_name,
             product_location,
             product_details,
             total_product_count,
-            product_status,
-            product_sale_count,
-            product_on_hold_count,
             productName
         );
 
