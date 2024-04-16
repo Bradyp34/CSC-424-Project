@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AddItem() {
     const [data, setData] = useState({
@@ -8,6 +9,8 @@ function AddItem() {
         product_location: '',
         total_product_count: ''
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
@@ -24,6 +27,7 @@ function AddItem() {
                 product_location: '',
                 total_product_count: '' // Resetting the fields after successful submission
             });
+            navigate('/Inventory')
         } catch (error) {
             console.error(error);
         }

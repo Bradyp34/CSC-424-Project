@@ -35,14 +35,14 @@ function CreateUser() {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="username" placeholder="Username" value={data.username} onChange={handleChange} required />
-                <input type="email" name="email" placeholder="Email" value={data.email} onChange={handleChange} required />
-                <input type="password" name="password" placeholder="Password" value={data.password} onChange={handleChange} required />
-                <select name="user_type" value={data.user_type} onChange={handleChange}>
+                <input className='w-[5%] py-2 rounded-md border-black' type="text" name="username" placeholder="Username" value={data.username} onChange={handleChange} required />
+                <input className='w-[5%] py-2 rounded-md border-black' type="email" name="email" placeholder="Email" value={data.email} onChange={handleChange} required />
+                <input className='w-[5%] py-2 rounded-md border-black' type="password" name="password" placeholder="Password" value={data.password} onChange={handleChange} required />
+                <select className='w-[5%] py-2 rounded-md border-black' name="user_type" value={data.user_type} onChange={handleChange}>
                     <option value="non-admin">non-admin</option>
                     <option value="admin">admin</option>
                 </select>
-                <button type="submit">Add User</button>
+                <button className='w-[5%] py-2 bg-black text-white rounded-md' type="submit">Add User</button>
             </form>
         </div>
     );
