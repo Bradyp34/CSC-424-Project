@@ -284,6 +284,7 @@ app.put("/updateProduct/:productId", (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 app.post("/removeProduct/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
