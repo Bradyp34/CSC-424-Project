@@ -47,7 +47,6 @@ function EditItem({ productName, onSubmission }) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="text" name="product_name" value={product.product_name} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Name" />
             <input type="text" name="product_details" value={product.product_details} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Details" />
             <input type="text" name="product_location" value={product.product_location} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Location" />
             <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} required className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Total Product Count" />

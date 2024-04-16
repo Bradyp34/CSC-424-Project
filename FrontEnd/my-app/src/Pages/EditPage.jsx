@@ -7,7 +7,7 @@ function EditPage() {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
-        navigate('/ItemSearchPage');
+        navigate('/Inventory');
     };
 
     return (
