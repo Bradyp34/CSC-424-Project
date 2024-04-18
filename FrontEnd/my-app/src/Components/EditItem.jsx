@@ -48,20 +48,54 @@ function EditItem({ productName, triggerFetch, onSubmission }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <input type="text" name="product_details" value={product.product_details} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Details" />
-            <input type="text" name="product_location" value={product.product_location} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Product Location" />
+        <form onSubmit={handleSubmit} className="space-y-4 text-white">
+            <input
+                type="text"
+                name="product_details"
+                value={product.product_details}
+                onChange={handleChange}
+                className="w-full px-3 py-2 placeholder-gray-300 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-cyan-600 focus:border-cyan-600"
+                placeholder="Product Details"
+            />
+            <input
+                type="text"
+                name="product_location"
+                value={product.product_location}
+                onChange={handleChange}
+                className="w-full px-3 py-2 placeholder-gray-300 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-cyan-600 focus:border-cyan-600"
+                placeholder="Product Location"
+            />
 
-            <label className="block text-sm font-medium text-gray-700">Total Product Count</label>
-            <input type="number" name="total_product_count" value={product.total_product_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+            <label className="block text-sm font-medium">Total Product Count</label>
+            <input
+                type="number"
+                name="total_product_count"
+                value={product.total_product_count}
+                onChange={handleChange}
+                className="w-full px-3 py-2 placeholder-gray-300 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-cyan-600 focus:border-cyan-600"
+            />
 
-            <label className="block text-sm font-medium text-gray-700">Product Sale Count</label>
-            <input type="number" name="product_sale_count" value={product.product_sale_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+            <label className="block text-sm font-medium">Product Sale Count</label>
+            <input
+                type="number"
+                name="product_sale_count"
+                value={product.product_sale_count}
+                onChange={handleChange}
+                className="w-full px-3 py-2 placeholder-gray-300 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-cyan-600 focus:border-cyan-600"
+            />
 
-            <label className="block text-sm font-medium text-gray-700">Product On Hold Count</label>
-            <input type="number" name="product_on_hold_count" value={product.product_on_hold_count} onChange={handleChange} className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+            <label className="block text-sm font-medium">Product On Hold Count</label>
+            <input
+                type="number"
+                name="product_on_hold_count"
+                value={product.product_on_hold_count}
+                onChange={handleChange}
+                className="w-full px-3 py-2 placeholder-gray-300 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-cyan-600 focus:border-cyan-600"
+            />
 
-            <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">Update Product</button>
+            <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75">
+                Update Product
+            </button>
         </form>
     );
 }
