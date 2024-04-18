@@ -29,7 +29,7 @@ function UpdateButton() {
     };
 
     return (
-        <button onClick={handleUpdate} className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75">
+        <button onClick={handleUpdate} className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 rounded-md">
             Update All Items
         </button>
     );
