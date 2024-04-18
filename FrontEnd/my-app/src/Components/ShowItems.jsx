@@ -61,7 +61,8 @@ const ShowItems = () => {
                         <th className="border px-4 py-2 bg-gray-300 text-black">Product Location</th>
                         <th className="border px-4 py-2 bg-gray-300 text-black">Product Details</th>
                         <th className="border px-4 py-2 bg-gray-300 text-black">In Stock</th>
-                        <th className="border px-4 py-2 bg-gray-300 text-black">Sold Count<br></br>Hold Count</th>
+                        <th className="border px-4 py-2 bg-gray-300 text-black">Sold Count</th>
+                        <th className="border px-4 py-2 bg-gray-300 text-black">On Hold Count</th>
                     </tr>
                 </thead>
                 <tbody>
