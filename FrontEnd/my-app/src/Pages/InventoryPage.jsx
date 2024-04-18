@@ -28,8 +28,13 @@ function InventoryPage() {
                 },
             });
             const data = await response.json();
+            console.log('Search data received:', data);  // Log what's returned from the server
+
+            // Check if data is an array, otherwise wrap it in an array
             if (Array.isArray(data)) {
-                setSearchResults(data);  // Update with search results
+                setSearchResults(data);  // Update with search results if data is already an array
+            } else if (data && typeof data === 'object') {
+                setSearchResults([data]);  // Wrap the single object in an array
             } else {
                 setSearchResults([]);  // Ensure searchResults is always an array even if no items match
             }
