@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 import EditItem from '../Components/EditItem';
 
 function EditPage() {
@@ -21,20 +22,23 @@ function EditPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-            <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-                <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-                    <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
+        <div>
+            <Navbar />
+            <div className='grid place-items-center h-screen bg-gray-900 text-white'>
+                <div className='max-w-md w-full p-8 bg-gray-800 rounded-lg'>
+                    <h2 className='text-3xl font-bold mb-4'>Edit Product</h2>
                     <input
                         type="text"
                         value={productName}
                         onChange={handleProductNameChange}
                         onBlur={handleProductNameBlur}
                         placeholder="Enter product name"
-                        className="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        className="w-full px-3 py-2 mb-4 placeholder-gray-300 text-white bg-gray-700 rounded-md focus:outline-none focus:ring-cyan-600 focus:border-cyan-600"
                     />
                     <EditItem productName={productName} triggerFetch={triggerFetch} onSubmission={handleNavigation} />
+                    <button className='w-full py-2 mt-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-700' onClick={() => navigate('/Inventory')}>
+                        Back
+                    </button>
                 </div>
             </div>
         </div>

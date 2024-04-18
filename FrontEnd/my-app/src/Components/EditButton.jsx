@@ -12,7 +12,7 @@ function EditButton({ productId }) {
         <div>
             {
             
-            <button onClick={handleClick} className="bg-blue-500 text-white px-4 py-20 hover:bg-blue-700 rounded-md">
+            <button onClick={handleClick} className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 rounded-md">
                 Edit
             </button>
             
