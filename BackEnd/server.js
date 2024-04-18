@@ -308,7 +308,7 @@ app.put("/updateProduct/:productName", (req, res) => { //This one Updates A spec
   }
 });
 
-app.post("/removeProduct/:productId", async (req, res) => {
+app.delete("/removeProduct/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
 
