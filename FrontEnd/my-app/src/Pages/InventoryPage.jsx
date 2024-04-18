@@ -47,6 +47,21 @@ function InventoryPage() {
             setSearchResults([]);  // Set to empty array on error
         }
     };
+    const fetchItems = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/all_products/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            setSearchResults(data);
+        } catch (error) {
+            console.error('Error fetching items:', error);
+            setSearchResults([]);
+        }
+    };
 
     useEffect(() => {
         if (!user) {
@@ -79,7 +94,7 @@ function InventoryPage() {
                 <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] bg-white'>
                     <div className="flex justify-center">
                         <AdminLevel>
-                            <AddItem />
+                            <AddItem onItemAdded={fetchItems} />
                         </AdminLevel>
                         <ShowItems items={searchResults} />
                         <AdminLevel>

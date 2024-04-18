@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function AddItem() {
+function AddItem({onItemAdded}) {
     const [data, setData] = useState({
         product_name: '',
         product_details: '',
@@ -28,6 +28,9 @@ function AddItem() {
                 total_product_count: '' // Resetting the fields after successful submission
             });
             navigate('/Inventory')
+            if (onItemAdded) {
+                onItemAdded();
+            }
         } catch (error) {
             console.error(error);
         }
