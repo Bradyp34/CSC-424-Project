@@ -56,7 +56,6 @@ function AccountPage() {
                     <h2 className='text-3xl font-bold mb-4'>Account Page</h2>
                     <div className="info bg-gray-700 p-4 rounded-lg mb-4 w-full max-w-md">
                         <div className="profile">Profile</div>
-                        <div className="name font-semibold">Name: {user.name}</div>
                         <div className="email font-semibold">Email: {user.email}</div>
                         <div className="username font-semibold">Username: {user.username}</div>
                     </div>
