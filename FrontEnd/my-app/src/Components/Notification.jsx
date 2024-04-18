@@ -39,11 +39,13 @@ function Notification() {
     };
 
     return (
-        <div>
-            {notification.show && <div className="notification">{notification.message}</div>}
-            <form onSubmit={handleSubmit}>
+        <div className="p-4">
+            {notification.show && <div className="notification bg-blue-100 border border-blue-500 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                {notification.message}
+            </div>}
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <input
-                    className='w-[5%] py-2 rounded-md border-black'
+                    className='w-full md:w-1/3 lg:w-1/4 py-2 rounded-md border-gray-300 shadow-sm'
                     type="text"
                     name="title"
                     placeholder="Title"
@@ -52,7 +54,7 @@ function Notification() {
                     required
                 />
                 <input
-                    className='w-[5%] py-2 rounded-md border-black'
+                    className='w-full md:w-1/3 lg:w-1/4 py-2 rounded-md border-gray-300 shadow-sm'
                     type="text"
                     name="message"
                     placeholder="Message"
@@ -61,7 +63,7 @@ function Notification() {
                     required
                 />
                 <input
-                    className='w-[5%] py-2 rounded-md border-black'
+                    className='w-full md:w-1/3 lg:w-1/4 py-2 rounded-md border-gray-300 shadow-sm'
                     type="text"
                     name="username"
                     placeholder="Username"
@@ -70,7 +72,7 @@ function Notification() {
                     required
                 />
                 <select
-                    className='w-[5%] py-2 rounded-md border-black'
+                    className='w-full md:w-1/3 lg:w-1/4 py-2 rounded-md border-gray-300 shadow-sm'
                     name="user_type"
                     value={data.user_type}
                     onChange={handleChange}
@@ -79,10 +81,10 @@ function Notification() {
                     <option value="admin">admin</option>
                 </select>
                 <button
-                    className='w-[5%] py-2 bg-black text-white rounded-md'
+                    className='w-full md:w-1/3 lg:w-1/4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md'
                     type="submit"
                 >
-                    Send 
+                    Send
                 </button>
             </form>
         </div>
