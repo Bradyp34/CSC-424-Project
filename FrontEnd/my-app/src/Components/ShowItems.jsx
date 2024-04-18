@@ -30,7 +30,7 @@ const ShowItems = () => {
 
     const incrementCount = (item, field) => {
         // Check that the increment does not exceed the total product count
-        if (field === 'product_sale_count' && (item.product_sale_count + item.product_on_hold_coun + 1) > item.total_product_count) {
+        if (field === 'product_sale_count' && (item.product_sale_count + item.product_on_hold_count + 1) > item.total_product_count) {
             console.error('Cannot exceed total product count');
             return;
         }
