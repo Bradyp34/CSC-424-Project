@@ -64,7 +64,24 @@ app.get("/all_users", async (req, res) => {
   const statement = db.prepare("select * from users").all();
   res.status(200).send(statement);
 });
+//Gets a specific user according to the given user_id
+app.get("/user/:user_id", async (req, res)=>{
+  const { user_id } = req.params;
+  if (user_id === undefined || user_id === "") {
+    return res.status(400).send("Missing search query parameter");
+  }
 
+  try {
+    const statement = db.prepare(
+      "SELECT * FROM users WHERE user_id = ?"
+    );
+    const response = statement.get(user_id);
+    res.status(200).send(response);
+  } catch (error) {
+    console.error("Error searching items:", error);
+    res.status(500).send("Internal server error");
+  }
+});
 app.post("/Register", async (req, res) => {
   const { username, email, password, user_type } = req.body;
   if (
