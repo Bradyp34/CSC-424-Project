@@ -238,7 +238,8 @@ app.get("/all_products", async (req, res) => {
   res.status(200).send(statement);
 });
 
-app.put("/updateProduct/:productName", (req, res) => {
+app.put("/updateProduct/:productName", (req, res) => { //This one Updates A specific Field in the product, in this implementation we don't 
+                                                      //need to provide all the fields for the product we are updating 
   const { productName } = req.params;
   const updatedFields = req.body;
 
