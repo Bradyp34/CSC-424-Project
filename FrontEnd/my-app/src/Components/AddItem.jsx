@@ -38,7 +38,7 @@ function AddItem({onItemAdded}) {
 
     return (
         <div className="container mx-auto px-4">
-            <h3 className="text-2xl font-bold mb-4">Add New Product</h3>
+            <h3 className="text-2xl font-bold mb-4 text-black">Add New Product</h3>
             <form onSubmit={handleSubmit} className="w-full text-left border-collapse">
                 <input
                     type="text"
