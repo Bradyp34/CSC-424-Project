@@ -180,6 +180,7 @@ app.post("/Login", async (req, res) => {
       message:"Login confirmed",
       user_type: userWithPassword.user_type,
       username: userWithPassword.username,
+      email: userWithPassword.email
     });
   } catch (error) {
     console.log(error);
@@ -321,23 +322,6 @@ app.post("/removeProduct/:productId", async (req, res) => {
     if (!existingProduct) {
       return res.status(404).send("Product not found.");
     }
-
-    const { product_status } = existingProduct;
-
-    if (product_status === "sold") {
-      product_db
-        .prepare(
-          "UPDATE products SET product_sale_count = product_sale_count - 1 WHERE product_id = ?"
-        )
-        .run(productId);
-    } else if (product_status === "on-hold") {
-      product_db
-        .prepare(
-          "UPDATE products SET product_on_hold_count = product_on_hold_count - 1 WHERE product_id = ?"
-        )
-        .run(productId);
-    }
-
     product_db
       .prepare("DELETE FROM products WHERE product_id = ?")
       .run(productId);

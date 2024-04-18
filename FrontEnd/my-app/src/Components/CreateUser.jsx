@@ -31,22 +31,56 @@ function CreateUser() {
         }
     };
 
-
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input className='w-[5%] py-2 rounded-md border-black' type="text" name="username" placeholder="Username" value={data.username} onChange={handleChange} required />
-                <input className='w-[5%] py-2 rounded-md border-black' type="email" name="email" placeholder="Email" value={data.email} onChange={handleChange} required />
-                <input className='w-[5%] py-2 rounded-md border-black' type="password" name="password" placeholder="Password" value={data.password} onChange={handleChange} required />
-                <select className='w-[5%] py-2 rounded-md border-black' name="user_type" value={data.user_type} onChange={handleChange}>
-                    <option value="non-admin">non-admin</option>
-                    <option value="admin">admin</option>
-                </select>
-                <button className='w-[5%] py-2 bg-black text-white rounded-md' type="submit">Add User</button>
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+            <form onSubmit={handleSubmit} className="p-5 bg-white rounded shadow-md">
+                <h2 className="text-lg font-bold mb-6">Create User</h2>
+                <div className="mb-4">
+                    <input
+                        className='w-full py-2 px-3 rounded border border-gray-300'
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        value={data.username}
+                        onChange={handleChange}
+                        required />
+                </div>
+                <div className="mb-4">
+                    <input
+                        className='w-full py-2 px-3 rounded border border-gray-300'
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={data.email}
+                        onChange={handleChange}
+                        required />
+                </div>
+                <div className="mb-4">
+                    <input
+                        className='w-full py-2 px-3 rounded border border-gray-300'
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={data.password}
+                        onChange={handleChange}
+                        required />
+                </div>
+                <div className="mb-4">
+                    <select
+                        className='w-full py-2 px-3 rounded border border-gray-300'
+                        name="user_type"
+                        value={data.user_type}
+                        onChange={handleChange}>
+                        <option value="non-admin">non-admin</option>
+                        <option value="admin">admin</option>
+                    </select>
+                </div>
+                <button
+                    className='w-full py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded'
+                    type="submit">Add User</button>
             </form>
         </div>
     );
-
 }
 
-export default CreateUser
+export default CreateUser;
