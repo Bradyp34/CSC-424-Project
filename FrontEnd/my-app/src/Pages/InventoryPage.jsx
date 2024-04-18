@@ -69,7 +69,6 @@ function InventoryPage() {
                             <AddItem />
                         </AdminLevel>
                         <SearchResults items={searchResults} />
-                        <br />
                         <ShowItems />
                         <AdminLevel>
                             <EditButton />
