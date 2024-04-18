@@ -4,9 +4,7 @@ import axios from 'axios';
 function Notification() {
     const [data, setData] = useState({
         title: '',
-        message: '',
-        user_type: 'non-admin',
-        username: ''
+        message: ''
     });
 
     const [notification, setNotification] = useState({
@@ -25,9 +23,7 @@ function Notification() {
             console.log(response);
             setData({
                 title: '',
-                message: '',
-                user_type: 'non-admin',
-                username: '' // Reset the form
+                message: ''
             });
             setNotification({ message: 'Notification sent successfully!', show: true });
             setTimeout(() => setNotification({ message: '', show: false }), 3000); // Clear after 3 seconds
@@ -62,24 +58,6 @@ function Notification() {
                     onChange={handleChange}
                     required
                 />
-                <input
-                    className='w-full md:w-1/3 lg:w-1/4 py-2 rounded-md border-gray-300 shadow-sm'
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={data.username}
-                    onChange={handleChange}
-                    required
-                />
-                <select
-                    className='w-full md:w-1/3 lg:w-1/4 py-2 rounded-md border-gray-300 shadow-sm'
-                    name="user_type"
-                    value={data.user_type}
-                    onChange={handleChange}
-                >
-                    <option value="non-admin">non-admin</option>
-                    <option value="admin">admin</option>
-                </select>
                 <button
                     className='w-full md:w-1/3 lg:w-1/4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md'
                     type="submit"
