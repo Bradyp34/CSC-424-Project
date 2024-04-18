@@ -82,7 +82,7 @@ function Notification() {
                     className='w-[5%] py-2 bg-black text-white rounded-md'
                     type="submit"
                 >
-                    Send Notification
+                    Send 
                 </button>
             </form>
         </div>
