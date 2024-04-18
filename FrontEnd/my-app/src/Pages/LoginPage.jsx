@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import { loginUser } from "../Components/ApiCalls";
 import { useUser } from "../context/UserType";
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -9,6 +11,8 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
+
 
  const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -21,12 +25,18 @@ const LoginPage = () => {
     const data = await loginUser(username, password);
     console.log('Login successful:', data);
     setUser({ username: data.username, user_type: data.user_type });
+    navigate('/Inventory')
   } catch (error) {
     console.log('Wrong UserName/Password:', error);
     setError('Wrong Username/Password. Please Try Again');
   }
 };
 
+useEffect(() => {
+  if (user) {
+      navigate('/Inventory'); // Redirects to the Inventory page if a user is logged in
+  }
+}, [user, navigate]);
 
   return (
     <div>

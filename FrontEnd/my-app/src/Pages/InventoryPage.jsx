@@ -4,6 +4,7 @@ import AddItem from '../Components/AddItem';
 import ShowItems from '../Components/ShowItems';
 import EditButton from '../Components/EditButton';
 import UpdateButton from '../Components/UpdateButton';
+import AdminLevel from '../Components/AdminLevel';
 
 function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -94,7 +95,9 @@ function InventoryPage() {
                     <div className="flex justify-center">
                         <AddItem />
                         <ShowItems />
-                        <EditButton />
+                        <AdminLevel>
+                            <EditButton />
+                        </AdminLevel>
                         <UpdateButton />
                     </div>
                 </div>

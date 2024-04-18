@@ -9,7 +9,7 @@ const Navbar = () => {
   const handleNav = () => {
     setNav(!nav)
   }
-  const { user, setUser } = useUser();
+  const { user } = useUser();
 
   return (
     <div className='
@@ -27,7 +27,9 @@ const Navbar = () => {
        text-cyan-600
        '><a href="/">PixelGear Inventory</a></h1>
       <ul className='hidden md:flex whitespace-nowrap' >
-        <li className='p-4'><a href='/Login'>Login</a></li>
+        {!user && (
+          <li className='p-4'><a href='/Login'>Login</a></li>
+        )}
         <li className='p-4'><a href='/Inventory'>Inventory</a></li>
         <li className='p-4'><a href='/Account'>{user?.username}</a></li>
         <li className='p-4'>{user?.user_type}</li>
@@ -48,8 +50,9 @@ const Navbar = () => {
           m-4
           '><a href="/">PixelGear Inventory</a></h1>
           <ul>
-          <li className='p-4 border-b border-gray-600'><a href='/login'>Login</a></li>
-          <li className='p-4 border-b border-gray-600'><a href='/ItemSearch'>Item Search</a></li>
+          {!user && (
+            <li className='p-4 border-b border-gray-600'><a href='/Login'>Login</a></li>
+          )}
           <li className='p-4 border-b border-gray-600'><a href='/Inventory'>Inventory</a></li>
           <li className='p-4 border-b border-gray-600'><a href='/Account'>Account</a></li>
           <li className='p-4 border-b border-gray-600'><a href='/AccountCreation'>AccountCreation</a></li>

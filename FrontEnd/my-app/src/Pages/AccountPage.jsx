@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
+import { useUser } from '../context/UserType';
+import { useNavigate } from 'react-router-dom';
 
 function AccountPage() {
- const [user, setUser] = useState({
-    name: '',
-    email: '',
-    username: '',
-    password: '',
- });
+  const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
  useEffect(() => {
     const fetchUserData = async () => {
@@ -24,7 +22,13 @@ function AccountPage() {
     };
 
     fetchUserData();
- }, []); // Empty dependency array means this effect runs once on mount
+ }, [setUser]);
+
+ const logout = () => {
+  setUser(null); 
+  sessionStorage.removeItem('userData'); 
+  navigate('/login'); 
+};
 
  return (
     <div>
@@ -41,6 +45,7 @@ function AccountPage() {
               Password: {user.password}
             </div>
           </div>
+        <button className='w-full py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 focus:outline-none focus:bg-cyan-700' onClick={logout}>Logout</button>
         </div>
       </div>
     </div>
