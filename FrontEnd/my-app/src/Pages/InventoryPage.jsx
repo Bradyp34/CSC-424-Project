@@ -10,50 +10,32 @@ function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [searchPerformed, setSearchPerformed] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
-        if (error) {
-            setError(null);  // Clear error when user starts typing again
-        }
     };
 
-    const handleSearchSubmit = (event) => {
+    const handleSearchSubmit = async (event) => {
         event.preventDefault();
         if (!searchQuery.trim()) {
-            setError("Please enter a valid query.");
+            setSearchResults(null);  // Clear results if empty query
             return;
         }
-        setSearchPerformed(true);
-        fetchItems(searchQuery);
-    };
-
-    const fetchItems = async (query) => {
-        setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/searchItems/${query}`, {
+            const response = await fetch(`http://localhost:8080/searchItems/${searchQuery}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
             const data = await response.json();
-            if (data && Object.keys(data).length) {
+            if (data && data.length) {
                 setSearchResults(data);
-                setError(null);
             } else {
                 setSearchResults(null);
-                setError('No results found.');
             }
         } catch (error) {
             console.error('Error fetching items:', error);
-            setError('Error fetching items. Please try again later.');
-            setSearchResults(null);
-        } finally {
-            setLoading(false);
-            setSearchQuery(''); // Optionally clear the search query after search
         }
     };
 
@@ -69,7 +51,7 @@ function InventoryPage() {
                             value={searchQuery}
                             onChange={handleSearchChange}
                             placeholder='Search items...'
-                            className='w-full px-3 py-2 mb-4 bg-white text-black rounded-md focus:outline-none'  // Input text in black
+                            className='w-full px-3 py-2 mb-4 bg-white text-black rounded-md focus:outline-none'
                         />
                         <button
                             type='submit'
@@ -78,27 +60,17 @@ function InventoryPage() {
                             Search
                         </button>
                     </form>
-                    {error && <p className='mt-4 text-red-500'>{error}</p>}
-                    {searchResults && (
-                        <div>
-                            <h3 className='text-2xl font-bold mt-4'>Results:</h3>
-                            <ul>
-                                <li>{searchResults.product_name}</li>
-                                <li>{searchResults.product_details}</li>
-                                <li>{searchResults.product_location}</li>
-                                <li>{searchResults.total_product_count}</li>
-                            </ul>
-                        </div>
-                    )}
                 </div>
                 <div className='h-[100%] border-2 rounded-2xl p-8 m-[100px] bg-white'>
                     <div className="flex justify-center">
-                        <AddItem />
-                        <ShowItems />
                         <AdminLevel>
-                            <EditButton />
+                            <AddItem />
                         </AdminLevel>
-                        <UpdateButton />
+                        <ShowItems items={searchResults} />
+                        <AdminLevel>
+                        <EditButton />
+                            <UpdateButton />
+                        </AdminLevel>
                     </div>
                 </div>
             </div>
@@ -107,3 +79,4 @@ function InventoryPage() {
 }
 
 export default InventoryPage;
+
