@@ -5,11 +5,10 @@ import ShowItems from '../Components/ShowItems';
 import EditButton from '../Components/EditButton';
 import UpdateButton from '../Components/UpdateButton';
 import AdminLevel from '../Components/AdminLevel';
-import SearchResults from '../Components/SearchResults';  // Import the new component
 
 function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState(null);  // Keep this null initially to show all items
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -18,7 +17,7 @@ function InventoryPage() {
     const handleSearchSubmit = async (event) => {
         event.preventDefault();
         if (!searchQuery.trim()) {
-            setSearchResults([]);  // Clear results if empty query
+            setSearchResults(null);  // Clear search results to display all items
             return;
         }
         try {
@@ -30,16 +29,15 @@ function InventoryPage() {
             });
             const data = await response.json();
             if (Array.isArray(data)) {
-                setSearchResults(data);
+                setSearchResults(data);  // Update with search results
             } else {
-                setSearchResults([]);  // Ensure searchResults is always an array
+                setSearchResults([]);  // Ensure searchResults is always an array even if no items match
             }
         } catch (error) {
             console.error('Error fetching items:', error);
             setSearchResults([]);  // Set to empty array on error
         }
     };
-
 
     return (
         <div>
@@ -68,7 +66,7 @@ function InventoryPage() {
                         <AdminLevel>
                             <AddItem />
                         </AdminLevel>
-                        <ShowItems items={searchResults}/>
+                        <ShowItems items={searchResults} />
                         <AdminLevel>
                             <EditButton />
                             <UpdateButton />

@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ShowItems = () => {
+const ShowItems = ({ items }) => {
     const [itemData, setItemData] = useState([]);
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        if (!items) {  // If no items prop is provided, fetch all items.
+            fetchData();
+        } else {
+            setItemData(items);  // If items prop is provided, use it directly.
+        }
+    }, [items]);
 
     const fetchData = async () => {
         try {
             const result = await axios.get("http://localhost:8080/all_products");
             setItemData(result.data);
         } catch (err) {
-            console.log("Something Wrong");
+            console.log("Something wrong with fetching data:", err);
         }
     };
 
@@ -22,30 +26,25 @@ const ShowItems = () => {
             await axios.put(`http://localhost:8080/updateProduct/${productName}`, {
                 [field]: newValue
             });
-            fetchData();  // Fetch data again to reflect changes in the UI
+            fetchData();  // Refresh the data after update to reflect changes
         } catch (error) {
             console.error('Error updating product:', error);
         }
     };
 
     const incrementCount = (item, field) => {
-        // Check that the increment does not exceed the total product count
-        if (field === 'product_sale_count' && (item.product_sale_count + item.product_on_hold_count + 1) > item.total_product_count) {
+        if ((field === 'product_sale_count' && (item.product_sale_count + item.product_on_hold_count + 1) > item.total_product_count) ||
+            (field === 'product_on_hold_count' && (item.product_on_hold_count + item.product_sale_count + 1) > item.total_product_count)) {
             console.error('Cannot exceed total product count');
             return;
         }
-        if (field === 'product_on_hold_count' && (item.product_on_hold_count + item.product_sale_count + 1) > item.total_product_count) {
-            console.error('Cannot exceed total product count');
-            return;
-        }
-
         const newValue = item[field] + 1;
         handleUpdate(item.product_name, field, newValue);
     };
 
     const decrementCount = (item, field) => {
         const newValue = item[field] - 1;
-        if (newValue >= 0) {  // Prevent negative counts
+        if (newValue >= 0) {
             handleUpdate(item.product_name, field, newValue);
         }
     };
@@ -61,23 +60,24 @@ const ShowItems = () => {
                         <th className="border px-4 py-2 bg-gray-300 text-black">Product Location</th>
                         <th className="border px-4 py-2 bg-gray-300 text-black">Product Details</th>
                         <th className="border px-4 py-2 bg-gray-300 text-black">In Stock</th>
-                        <th className="border px-4 py-2 bg-gray-300 text-black">Sold Count<br></br>Hold Count</th>
+                        <th className="border px-4 py-2 bg-gray-300 text-black">Sold Count</th>
+                        <th className="border px-4 py-2 bg-gray-300 text-black">On Hold Count</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {itemData.map((item, i) => (
-                        <tr key={i} className={i % 2 === 0 ? 'bg-gray-100 text-black' : 'bg-white text-black'}>
+                    {itemData.map((item, index) => (
+                        <tr key={index} className={index % 2 === 0 ? 'bg-gray-100 text-black' : 'bg-white text-black'}>
                             <td className="border px-4 py-2">{item.product_id}</td>
                             <td className="border px-4 py-2">{item.product_name}</td>
                             <td className="border px-4 py-2">{item.product_location}</td>
                             <td className="border px-4 py-2">{item.product_details}</td>
                             <td className="border px-4 py-2">{item.total_product_count}</td>
-                            <td className="border px-4 py-2 flex items-center justify-center">
+                            <td className="border px-4 py-2">
                                 <button onClick={() => decrementCount(item, 'product_sale_count')}>-</button>
                                 {item.product_sale_count}
                                 <button onClick={() => incrementCount(item, 'product_sale_count')}>+</button>
                             </td>
-                            <td className="border px-4 py-2 flex items-center justify-center">
+                            <td className="border px-4 py-2">
                                 <button onClick={() => decrementCount(item, 'product_on_hold_count')}>-</button>
                                 {item.product_on_hold_count}
                                 <button onClick={() => incrementCount(item, 'product_on_hold_count')}>+</button>
