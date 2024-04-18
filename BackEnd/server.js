@@ -151,7 +151,17 @@ app.post("/removeUser", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+app.post("/Notification", async(req, res)=>{
+  try {
+    const { message } = req.body;
+    console.log("Notification message:", message);
 
+    res.status(200).json({ success: true, message: "Notification sent successfully" });
+  } catch (error) {
+    console.error("Error sending notification:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
 app.post("/Login", async (req, res) => {
   try {
     const { username, password } = req.body;
