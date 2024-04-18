@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import { useUser } from '../context/UserType';
 import { useNavigate } from 'react-router-dom';
+import Notification from '../Components/Notification';
 
 function AccountPage() {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+
+ const [sendNotification, setSendNotification] = useState(false);
 
  useEffect(() => {
     const fetchUserData = async () => {
@@ -33,6 +36,10 @@ function AccountPage() {
  return (
     <div>
       <Navbar />
+      <button onClick={() => setSendNotification(!sendNotification)}>
+        {sendNotification ? 'Hide Notification' : 'Send Notification'}
+      </button>
+      {sendNotification && <Notification />}
       <div className='grid place-items-center h-screen bg-gray-900 text-white'>
         <div className='max-w-md w-full p-8 bg-gray-800 rounded-lg'>
           <h2 className='text-3xl font-bold mb-4'>Account Page</h2>
