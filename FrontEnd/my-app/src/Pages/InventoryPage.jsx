@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import AddItem from '../Components/AddItem';
 import ShowItems from '../Components/ShowItems';
 import EditButton from '../Components/EditButton';
 import UpdateButton from '../Components/UpdateButton';
 import AdminLevel from '../Components/AdminLevel';
+import SearchResults from '../Components/SearchResults';  // Import the new component
 
 function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState(null);
-    const [searchPerformed, setSearchPerformed] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -18,7 +18,7 @@ function InventoryPage() {
     const handleSearchSubmit = async (event) => {
         event.preventDefault();
         if (!searchQuery.trim()) {
-            setSearchResults(null);  // Clear results if empty query
+            setSearchResults([]);  // Clear results if empty query
             return;
         }
         try {
@@ -29,15 +29,17 @@ function InventoryPage() {
                 },
             });
             const data = await response.json();
-            if (data && data.length) {
+            if (Array.isArray(data)) {
                 setSearchResults(data);
             } else {
-                setSearchResults(null);
+                setSearchResults([]);  // Ensure searchResults is always an array
             }
         } catch (error) {
             console.error('Error fetching items:', error);
+            setSearchResults([]);  // Set to empty array on error
         }
     };
+
 
     return (
         <div>
@@ -66,9 +68,11 @@ function InventoryPage() {
                         <AdminLevel>
                             <AddItem />
                         </AdminLevel>
-                        <ShowItems items={searchResults} />
+                        <SearchResults items={searchResults} />
+                        <br />
+                        <ShowItems />
                         <AdminLevel>
-                        <EditButton />
+                            <EditButton />
                             <UpdateButton />
                         </AdminLevel>
                     </div>
@@ -79,4 +83,3 @@ function InventoryPage() {
 }
 
 export default InventoryPage;
-
