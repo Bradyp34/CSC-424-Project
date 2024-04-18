@@ -11,27 +11,39 @@ function AccountPage() {
  const [sendNotification, setSendNotification] = useState(false);
 
  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('https://localhost:8080/user/1');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setUser(data);
-      } catch (error) {
-        console.error('There was a problem with your fetch operation:', error);
+  if (!user) {
+    navigate('/Login');
+  }
+}, [user, navigate]);
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch('https://localhost:8080/user/1');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      const data = await response.json();
+      setUser(data);
+    } catch (error) {
+      console.error('There was a problem with your fetch operation:', error);
+    }
+  };
 
+  if (user) {
     fetchUserData();
- }, [setUser]);
+  }
+}, [user, setUser]);
 
- const logout = () => {
+const logout = () => {
   setUser(null); 
   sessionStorage.removeItem('userData'); 
   navigate('/login'); 
 };
+
+if (!user) {
+  return <></>
+}
 
  return (
     <div>

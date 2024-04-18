@@ -34,7 +34,7 @@ const LoginPage = () => {
 
 useEffect(() => {
   if (user) {
-      navigate('/Inventory'); // Redirects to the Inventory page if a user is logged in
+      navigate('/Inventory');
   }
 }, [user, navigate]);
 

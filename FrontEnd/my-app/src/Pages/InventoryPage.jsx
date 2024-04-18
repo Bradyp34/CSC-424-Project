@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import AddItem from '../Components/AddItem';
 import ShowItems from '../Components/ShowItems';
 import EditButton from '../Components/EditButton';
 import UpdateButton from '../Components/UpdateButton';
 import AdminLevel from '../Components/AdminLevel';
+import { useNavigate } from 'react-router';
+import { useUser } from '../context/UserType';
 
 function InventoryPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState(null);  // Keep this null initially to show all items
+    const { user, setUser } = useUser();
+    const navigate = useNavigate();
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -43,6 +47,12 @@ function InventoryPage() {
             setSearchResults([]);  // Set to empty array on error
         }
     };
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/Login');
+        }
+      }, [user, navigate]);
 
     return (
         <div>
