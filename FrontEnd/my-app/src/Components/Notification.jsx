@@ -5,7 +5,8 @@ function Notification() {
     const [data, setData] = useState({
         title: '',
         message: '',
-        user_type: 'non-admin'
+        user_type: 'non-admin',
+        username: ''
     });
 
     const [notification, setNotification] = useState({
@@ -25,7 +26,8 @@ function Notification() {
             setData({
                 title: '',
                 message: '',
-                user_type: 'non-admin'
+                user_type: 'non-admin',
+                username: '' // Reset the form
             });
             setNotification({ message: 'Notification sent successfully!', show: true });
             setTimeout(() => setNotification({ message: '', show: false }), 3000); // Clear after 3 seconds
@@ -40,13 +42,48 @@ function Notification() {
         <div>
             {notification.show && <div className="notification">{notification.message}</div>}
             <form onSubmit={handleSubmit}>
-                <input className='w-[5%] py-2 rounded-md border-black' type="text" name="title" placeholder="Title" value={data.title} onChange={handleChange} required />
-                <input className='w-[5%] py-2 rounded-md border-black' type="text" name="message" placeholder="Message" value={data.message} onChange={handleChange} required />
-                <select className='w-[5%] py-2 rounded-md border-black' name="user_type" value={data.user_type} onChange={handleChange}>
+                <input
+                    className='w-[5%] py-2 rounded-md border-black'
+                    type="text"
+                    name="title"
+                    placeholder="Title"
+                    value={data.title}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    className='w-[5%] py-2 rounded-md border-black'
+                    type="text"
+                    name="message"
+                    placeholder="Message"
+                    value={data.message}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    className='w-[5%] py-2 rounded-md border-black'
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={data.username}
+                    onChange={handleChange}
+                    required
+                />
+                <select
+                    className='w-[5%] py-2 rounded-md border-black'
+                    name="user_type"
+                    value={data.user_type}
+                    onChange={handleChange}
+                >
                     <option value="non-admin">non-admin</option>
                     <option value="admin">admin</option>
                 </select>
-                <button className='w-[5%] py-2 bg-black text-white rounded-md' type="submit">Send Notification</button>
+                <button
+                    className='w-[5%] py-2 bg-black text-white rounded-md'
+                    type="submit"
+                >
+                    Send Notification
+                </button>
             </form>
         </div>
     );

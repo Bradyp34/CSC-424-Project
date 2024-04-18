@@ -10,6 +10,8 @@ function AccountPage() {
     password: '',
  });
 
+ const [showNotification, setShowNotification] = useState(false);
+
  useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -30,7 +32,10 @@ function AccountPage() {
  return (
     <div>
       <Navbar />
-      <Notification />
+      <button onClick={() => setShowNotification(!showNotification)}>
+        {showNotification ? 'Hide Notification' : 'Show Notification'}
+      </button>
+      {showNotification && <Notification />}
       <div className='grid place-items-center h-screen bg-gray-900 text-white'>
         <div className='max-w-md w-full p-8 bg-gray-800 rounded-lg'>
           <h2 className='text-3xl font-bold mb-4'>Account Page</h2>
