@@ -5,10 +5,10 @@ const ShowItems = ({ items }) => {
     const [itemData, setItemData] = useState([]);
 
     useEffect(() => {
-        if (!items) {  // If no items prop is provided, fetch all items.
+        if (!items) {
             fetchData();
         } else {
-            setItemData(items);  // If items prop is provided, use it directly.
+            setItemData(items);
         }
     }, [items]);
 
@@ -26,9 +26,21 @@ const ShowItems = ({ items }) => {
             await axios.put(`http://localhost:8080/updateProduct/${productName}`, {
                 [field]: newValue
             });
-            fetchData();  // Refresh the data after update to reflect changes
+            refreshProductData(productName);
         } catch (error) {
             console.error('Error updating product:', error);
+        }
+    };
+
+    const refreshProductData = async (productName) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/searchItems/${productName}`);
+            if (response.data) {
+                const newData = itemData.map(item => item.product_name === productName ? response.data : item);
+                setItemData(newData);
+            }
+        } catch (error) {
+            console.error('Failed to refresh product data:', error);
         }
     };
 
