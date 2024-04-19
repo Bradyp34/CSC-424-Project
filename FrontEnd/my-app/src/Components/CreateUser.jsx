@@ -32,7 +32,7 @@ function CreateUser() {
     };
 
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="flex justify-center items-center h-screen bg-gray-80">
             <form onSubmit={handleSubmit} className="p-5 bg-white rounded shadow-md">
                 <h2 className="text-lg font-bold mb-6">Create User</h2>
                 <div className="mb-4">
