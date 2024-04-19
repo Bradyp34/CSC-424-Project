@@ -63,7 +63,7 @@ const ShowItems = ({ items }) => {
 
     return (
         <div className="container mx-auto px-4">
-            <h3 className="text-2xl font-bold mb-4">Products</h3>
+            <h1 className="text-4xl font-bold mb-4 ">Products</h1>
             <table className="w-full text-left border-collapse">
                 <thead>
                     <tr>
